@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1462690252 source:d:\Одом\debug\main.cpp
+	<iostream>
+	<cstdio>
+
+1464515317 source:g:\Одом\debug\main.cpp
+	<cstdio>
+	<algorithm>
+
+1467980027 source:g:\acm\debug\main.cpp
+	<cstdio>
+
