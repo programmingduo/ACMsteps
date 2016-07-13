@@ -11,6 +11,16 @@ struct node{
     }
 }*root;
 
+void release(node *p)
+{
+    for(int i = 0; i < 3; i ++)
+    {
+        if(p->next[i] != NULL)
+            release(p->next[i]);
+    }
+    delete p;
+}
+
 void insert(char *s)
 {
     node *p = root;
@@ -29,77 +39,75 @@ void insert(char *s)
     p->val = 1;
 }
 
-bool search(char *s)
+//flag = 0: no change
+bool search(char *s, int flag, node *p)
 {
-    node *p = root;
-    int len = strlen(s);
-    for(int i = 0; i < len; i ++)
+    if(strlen(s) == 0)
+        return flag;
+    int t= s[0] - 'a';
+//    if(strlen(s) == 1)
+//    {
+//        if(flag)
+//        {
+//            return p->next[t] != NULL && p->next[t]->val > 0;
+//        }
+//        else
+//        {
+//            if(p->next[(t + 1) % 3] != NULL && p->next[(t + 1) % 3]->val > 0
+//                || p->next[(t + 2) % 3] != NULL && p->next[(t + 2) % 3]->val > 0)
+//                return 1;
+//            return 0;
+//        }
+//    }
+
+    if(flag)
     {
-        int t = s[i] - 'a';
-        if(p->next[t] == 0)
-            return false;
-        p = p->next[t];
+        if(p->next[t] == NULL)
+            return 0;
+        return search(s + 1, 1, p->next[t]);
     }
-    return p->val;
+    else
+    {
+        if(p->next[t] != NULL)
+            if(search(s + 1, 0, p->next[t]))
+            return 1;
+        t = (t + 1) % 3;
+        if(p->next[t] != NULL)
+            if(search(s + 1, 1, p->next[t]))
+            return 1;
+        t = (t + 1) %3;
+        if(p->next[t] != NULL)
+            if(search(s + 1, 1, p->next[t]))
+            return 1;
+        return 0;
+    }
 }
 
-char c[100000];
+char c[1000000];
 
 int main ()
 {
     int n ,m;
-    root = new node;
-    root->clean();
+
     while(~scanf("%d%d", &n, &m))
     {
+        root = new node;
+        root ->clean();
         for(int i = 0; i < n; i ++)
         {
             scanf("%s", c);
             insert(c);
         }
 
-        char temp;
         for(int i = 0; i < m; i ++)
         {
             scanf("%s", c);
-            int flag = 0, len = strlen(c);
-            for(int j = 0; j < len;j ++)
-            {
-                temp = c[j];
-                if(temp != 'a')
-                {
-                    c[j] = 'a';
-                    if(search(c))
-                    {
-                        flag = 1;
-                        break;
-                    }
-                }
-                if(temp != 'b')
-                {
-                    c[j] = 'b';
-                    if(search(c))
-                    {
-                        flag = 1;
-                        break;
-                    }
-                }
-                if(temp != 'c')
-                {
-                    c[j] = 'c';
-                    if(search(c))
-                    {
-                        flag = 1;
-                        break;
-                    }
-                }
-                c[j] = temp;
-            }
-            if(flag)
+            if(search(c, 0, root))
                 printf("YES\n");
             else
                 printf("NO\n");
         }
+        release(root);
     }
 }
 

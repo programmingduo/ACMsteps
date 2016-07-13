@@ -67,7 +67,7 @@ char * standard(char *s)
 
 
 
-void insert(char *s)
+void inserts(char *s)
 {
 //    printf("%s ", s);
 //    printf("%d", s[0]);
@@ -86,15 +86,15 @@ void insert(char *s)
     p->tail ++;
 }
 
-int index, flag;
+int indexs, flag;
 char ans[10];
 
-void search(node *t)
+void searchs(node *t)
 {
-//    printf("%d ", index);
+//    printf("%d ", indexs);
     if(t->val < 2)
         return ;
-    if(index == 7)
+    if(indexs == 7)
     {
 
         if(t->tail < 2)
@@ -112,9 +112,9 @@ void search(node *t)
     {
         if(!t->next[i])
             continue;
-        ans[index ++] = '0' + i;
-        search(t->next[i]);
-        index --;
+        ans[indexs ++] = '0' + i;
+        searchs(t->next[i]);
+        indexs --;
     }
 }
 
@@ -130,10 +130,10 @@ int main ()
     {
         scanf("%s", s);
         c = standard(s);
-        insert(c);
+        inserts(c);
     }
-    index = 0;
-    search(root);
+    indexs = 0;
+    searchs(root);
     if(flag == 0)
         printf("No duplicates.\n");
     return 0;
