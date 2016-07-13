@@ -24,12 +24,12 @@ void dfs(int x, int now)
     if(f == 0)
         f ++;
     int t2 = 0;
-
+    sort(l, l + f);
     do{
         t2 = 0;
         for(int i = 0; i < f; i ++)
             t2 = t2 * 10 + l[i] - '0';
-        printf("%d %d\n", x, t2);
+//        printf("%d %d\n", x, t2);
             dfs(x + 1, t2);
     }while(next_permutation(l, l + f));
 }
