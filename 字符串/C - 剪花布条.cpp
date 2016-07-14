@@ -27,7 +27,7 @@ void get_next()
 
 int solvee()
 {
-    int cnt = 0;    //´¢´æ´ğ°¸¸öÊı
+    int cnt = 0;
     int i = 0, j = 0;
     int lenp = strlen(word);
     int lens = strlen(text);

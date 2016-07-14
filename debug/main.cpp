@@ -1,66 +1,124 @@
 #include<cstdio>
-#include<cstring>
+#include<algorithm>
 
-char s1[100006], s2[100006];
-int next1[100006], next2[100006];
-int diviser1[100006], diviser2[100006];
+long long a[20];
+long long d[100];
+long long ca[100];
 
-void getNext(char * a, int *na)
+long long min(long long a, long long b)
 {
-    int len = strlen(a);
-    na[0] = na[1] = 0;
-    for(int i = 2; i < len; i ++)
-    {
-        int j = na[i - 1];
-        while(j && a[i - 1] != a[j])
-            j = na[j];
-        na[i] = a[i - 1] == a[j] ? j + 1: 0;
-    }
-}
-
-void getDiviser(char *a, int *na, int& d)
-{
-    int len = strlen(a);
-    if(len % (len - na[len])) == 0)
-        d = len - na[len];
-    else
-        d = len;
-}
-
-int cmp(int l1)
-{
-    for(int i = 0; i < l1; i ++)
-        if(s1[i] != s2[i])
-        return 1;
-    return 0;
+    return a < b? a: b;
 }
 
 int main ()
 {
-    root = new node();
-    while(~scanf("%s%s", s1, s2))
+    int n;
+    while(~scanf("%d", &n))
     {
-        root->clean();
-        root->val = 2;
-        int d1 = 0, d2 = 0, ans = 0;
-        getNext(s1, next1);
-        getNext(s2, next2);
-        for(int i = 0; i < strlen(s1); i ++)
-            printf("%d ", next1[i]);
-        printf("\n");
-        for(int i = 0; i < strlen(s2); i ++)
-            printf("%d ", next2[i]);
-        printf("\n");
-
-        getDiviser(s1, next1, d1);
-        getDiviser(s2, next2, d2);
-//        printf("sfad");
-        if(d1 != d2 || cmp(d1) != 0)
-        {
+        long long ans = 0;
+        for(int i = 0; i < n; i ++)
+            scanf("%lld", &a[i]);
+        if(n < 3)
             printf("0\n");
-            continue;
+        else
+        {
+            int re = 0;
+            long long cannot = 0, dou = 0;
+            std::sort(a, a + n);
+            for(int i = 0; i < n; i ++)
+            {
+                if(i + 2 > n)
+                    break;
+                if(i < n - 1 && a[i] == a[i + 1])
+                {
+                    if(re)
+                    {
+                        re --;
+                        ans ++;
+                        i ++;
+                    }
+                    else
+                    {
+                        if(i + 2 < n)
+                        {
+                            ans ++;
+                            i += 2;
+                        }
+                    }
+                    continue;
+                }
+                if(i + 2 > n)
+                    continue;
+                if(a[i] + a[i + 1] > a[i + 2])
+                {
+                    ans ++;
+                    i += 2;
+                }
+                else
+                    re ++;
+            }
+            printf("%d\n", ans);
         }
-
     }
     return 0;
 }
+//            for(int i = 1; i < n; i ++)
+//            {
+//                if(a[i] == a[i -1])
+//                {
+//                    d[dou++] = a[i];
+//                    a[i] = a[i - 1] = 0x7fffffffff;
+//                }
+//            }
+//            std::sort(a, a + n);
+////            for(int i = 0; i < n; i ++)
+////                printf("%d ", a[i]);
+//            for(int i = 0; i < n; i ++)
+//            {
+//                if(i + 2 >= n || a[i + 2] == 0x7fffffffff)
+//                {
+////                    printf(" i=%d ", i);
+//                    if(i < n && a[i] != 0x7fffffffff)
+//                        ca[cannot ++] = a[i];
+//                    if(i + 1 < n && a[i + 1] != 0x7fffffffff)
+//                        ca[cannot++] = a[i + 1];
+//                    if(i + 2 < n && a[i + 2] != 0x7fffffffff)
+//                        ca[cannot ++] = a[i +2];
+//                    break;
+//                }
+//                if(a[i] + a[i +1] < a[i + 2])
+//                    ca[cannot ++] = a[i];
+//                else
+//                {
+//                    i += 2;
+//                    ans ++;
+//                }
+//            }
+////            printf("%d %d %d", ans, dou, cannot);
+//            long long re = 0, flag;
+//            for(int i = 0, j = 0; i < dou; i ++)
+//            {
+//                flag = 1;
+//                j = 0;
+//                while(j < cannot)
+//                {
+//                    if(d[i] + d[i] > ca[cannot])
+//                    {
+//                        ca[cannot] = 1000000000000;
+//                        flag = 0;
+//                        break;
+//                    }
+//                    j ++;
+//                }
+//                if(flag)
+//                    re ++;
+//                else
+//                    ans ++;
+//            }
+//            if(re > 0)
+//                ans += re * 2 / 3;
+//            printf("%lld\n", ans);
+//        }
+//
+//    }
+//}
