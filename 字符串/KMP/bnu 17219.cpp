@@ -9,7 +9,7 @@ void getNext(char * a, int *na)
 {
     int len = strlen(a);
     na[0] = na[1] = 0;
-    for(int i = 2; i < len; i ++)
+    for(int i = 2; i <= len; i ++)
     {
         int j = na[i - 1];
         while(j && a[i - 1] != a[j])
@@ -21,7 +21,7 @@ void getNext(char * a, int *na)
 void getDiviser(char *a, int *na, int& d)
 {
     int len = strlen(a);
-    if(len % (len - na[len])) == 0)
+    if(len % (len - na[len]) == 0)
         d = len - na[len];
     else
         d = len;
@@ -37,28 +37,44 @@ int cmp(int l1)
 
 int main ()
 {
-    root = new node();
+
     while(~scanf("%s%s", s1, s2))
     {
-        root->clean();
-        root->val = 2;
         int d1 = 0, d2 = 0, ans = 0;
         getNext(s1, next1);
         getNext(s2, next2);
-        for(int i = 0; i < strlen(s1); i ++)
-            printf("%d ", next1[i]);
-        printf("\n");
-        for(int i = 0; i < strlen(s2); i ++)
-            printf("%d ", next2[i]);
-        printf("\n");
+//        for(int i = 0; i < strlen(s1); i ++)
+//            printf("%d ", next1[i]);
+//        printf("\n");
+//        for(int i = 0; i < strlen(s2); i ++)
+//            printf("%d ", next2[i]);
+//        printf("\n");
 
         getDiviser(s1, next1, d1);
         getDiviser(s2, next2, d2);
+//        printf("%d %d ", d1, d2);
 //        printf("sfad");
         if(d1 != d2 || cmp(d1) != 0)
         {
             printf("0\n");
             continue;
+        }
+        else
+        {
+            ans = 0;
+            int len1 = strlen(s1), len2 = strlen(s2);
+            for(int i = 1; 1; i ++)
+                if(d1 > len1 || d1 > len2)
+                break;
+            else
+            {
+                if(len1 % d1 == 0 && len2 % d1 == 0)
+                {
+                    ans ++;
+                }
+                d1 += d2;
+            }
+            printf("%d\n", ans);
         }
 
     }

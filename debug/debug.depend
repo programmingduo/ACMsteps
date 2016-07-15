@@ -10,9 +10,10 @@
 1467980027 source:g:\acm\debug\main.cpp
 	<cstdio>
 
-1468461278 source:d:\acmsteps\debug\main.cpp
+1468558439 source:d:\acmsteps\debug\main.cpp
 	<cstdio>
-	<cstring>
+	<string.h>
+	<algorithm>
 
 1468470069 source:g:\acmsteps\debug\main.cpp
 	<cstdio>
