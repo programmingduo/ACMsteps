@@ -1,0 +1,104 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="en-US">
+<title>Source Code</title>
+<link type="text/css" rel="stylesheet" href="sh_style.css">
+<script type="text/javascript" src="sh_main.js"></script>
+<script type="text/javascript" src="lang/sh_cpp.js"></script>
+</head><body lang="en-US" link=blue alink=blue vlink=blue onload="sh_highlightDocument()">
+<p align=center><b><font size=4 color=#333399>Source Code</font></b></p>
+<table align="center" style="font-size:10pt"><tr><td><b>Problem: <a href="problem?id=3264">3264</a></b></td><td width=10px></td><td><b>User: <a href="userstatus?user_id=mulan">mulan</a></b></td></tr>
+<tr><td><b>Memory: 2500K</b></td><td width=10px></td><td><b>Time: 1829MS</b></td></tr>
+<tr><td><b>Language: C++</b></td><td width=10px></td><td><b>Result: <font color=blue>Accepted</font></b></td></tr></table>
+<ul><li><b><font color=#333399 size=5>Source Code</font></li>
+</b>
+<pre class="sh_cpp" style="font-family:Courier New,Courier,monospace"><b>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;numeric&gt;
+using namespace std;
+#define MY_MIN  99999999
+#define MY_MAX  -99999999
+
+
+struct CNode
+{
+	int L,R;
+	int nMin,nMax;
+	CNode * pLeft, * pRight;
+};
+int nMax, nMin;
+CNode Tree[1000000];
+//CNode Tree[20];
+int nCount = 0;
+void BuildTree(CNode * pRoot, int L,int R)
+{
+	pRoot-&gt;L = L;
+	pRoot-&gt;R = R;
+	
+	pRoot-&gt;nMin = MY_MIN;
+	pRoot-&gt;nMax = MY_MAX;
+
+	if ( L != R) {
+		nCount ++;
+		pRoot-&gt;pLeft = Tree + nCount;
+		nCount ++;
+		pRoot-&gt;pRight = Tree + nCount;
+		BuildTree( pRoot-&gt;pLeft, L, ( L + R )/2);
+		BuildTree( pRoot-&gt;pRight, (L + R) / 2 + 1,R);
+	}
+}
+void Insert( CNode * pRoot , int i,int v)
+{
+	if( pRoot-&gt;L == i &#38;&#38;  pRoot-&gt;R == i ) {
+		pRoot-&gt;nMin = pRoot-&gt;nMax = v;
+		return;
+	}
+	pRoot-&gt;nMin = _cpp_min(pRoot-&gt;nMin,v);
+	pRoot-&gt;nMax = _cpp_max(pRoot-&gt;nMax,v);
+	if( i &lt;= (pRoot-&gt;L + pRoot-&gt;R )/2 )
+		Insert( pRoot-&gt;pLeft,i,v);
+	else
+		Insert( pRoot-&gt;pRight,i,v);
+}
+void Query(CNode * pRoot, int s, int e)
+{
+	if( pRoot-&gt;nMin &gt;= nMin &#38;&#38; pRoot-&gt;nMax &lt;= nMax )
+		return;
+	if( s == pRoot-&gt;L &#38;&#38; e == pRoot-&gt;R) {
+		nMin = _cpp_min(pRoot-&gt;nMin,nMin);
+		nMax = _cpp_max(pRoot-&gt;nMax,nMax);
+		return ;
+	}
+	if( e &lt;=  (pRoot-&gt;L + pRoot-&gt;R) / 2 )
+		Query(pRoot-&gt;pLeft, s,e);
+	else if( s &gt;= (pRoot-&gt;L + pRoot-&gt;R) / 2 + 1)
+		Query(pRoot-&gt;pRight, s,e);
+	else {
+		Query(pRoot-&gt;pLeft, s,(pRoot-&gt;L + pRoot-&gt;R) / 2);
+		Query(pRoot-&gt;pRight, (pRoot-&gt;L + pRoot-&gt;R) / 2 + 1 ,e);
+	}
+}
+int main()
+{
+	int n,q,h;
+	int i,j,k;
+	scanf(&#34;%d%d&#34;,&#38;n,&#38;q);
+	nCount = 0;
+	BuildTree(Tree,1,n);	
+	for( i = 1;i &lt;= n;i ++ ) {
+		scanf(&#34;%d&#34;,&#38;h);
+		Insert( Tree,i,h);
+	}
+	for( i = 0;i &lt; q;i ++ ) {
+		int s,e;
+		scanf(&#34;%d%d&#34;, &#38;s,&#38;e);
+		nMax = MY_MAX;
+		nMin = MY_MIN;
+		Query(Tree,s,e);
+		printf(&#34;%d\n&#34;,nMax - nMin);
+	}
+	return 0;
+}
+</b></pre>
+</ul>
+</body></html>

@@ -1,0 +1,134 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="en-US">
+<title>Source Code</title>
+<link type="text/css" rel="stylesheet" href="sh_style.css">
+<script type="text/javascript" src="sh_main.js"></script>
+<script type="text/javascript" src="lang/sh_cpp.js"></script>
+</head><body lang="en-US" link=blue alink=blue vlink=blue onload="sh_highlightDocument()">
+<p align=center><b><font size=4 color=#333399>Source Code</font></b></p>
+<table align="center" style="font-size:10pt"><tr><td><b>Problem: <a href="problem?id=2155">2155</a></b></td><td width=10px></td><td><b>User: <a href="userstatus?user_id=xk_00948160">xk_00948160</a></b></td></tr>
+</table>
+<ul><li><b><font color=#333399 size=5>Source Code</font></li>
+</b>
+<pre class="sh_cpp" style="font-family:Courier New,Courier,monospace"><b>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+bool a[3000][3000];
+int n, sum;
+/*
+* 修改过程:
+* 以x为主轴, y为次轴建立二维线段树. 先从x周开始找到线段[x1, x2]对应的节点rootx, 
+* 之后按照y轴找到线段[y1, y2]对应的节点rooty, 将元素a[rootx][rooty]取反.
+*/
+void Modify_y(int rootx, int rooty, int first, int last, int y1, int y2)
+
+//rootx是外层线段树节点
+//rooty是内层线段树节点
+//first ,last 是内层线段树左右端点
+//y1,y2是要修改的内维范围
+
+{     
+//rootx外层节点包含的内层线段树的rooty节点所对应的矩形区域，<span lang="zh-cn">是否完整被改过</span>就记在a[rootx][rooty]
+    if (y1 == first &#38;&#38; last== y2) 
+        a[rootx][rooty] = !a[rootx][rooty];     
+    else     {          
+        int mid = (first+last)/2;
+        if (y2 &lt;= mid) 
+            Modify_y(rootx, (rooty&lt;&lt;1)+1, first, mid, y1, y2);
+        else if (y1 &gt; mid) 
+            Modify_y(rootx, (rooty&lt;&lt;1)+2, mid+1, last, y1, y2);
+        else{               
+            Modify_y(rootx, (rooty&lt;&lt;1)+1, first, mid, y1, mid);
+            Modify_y(rootx, (rooty&lt;&lt;1)+2, mid+1, last, mid+1, y2); 
+        }     
+    }
+}
+
+void Modify_x(int root, int first, int last, int x1, int x2, int y1, int y2)</b></pre>
+	<pre class="sh_cpp" style="font-family:Courier New,Courier,monospace"><b>//root 是外维线段树节点
+//first ,last 是该节点的左右端点
+//x1,x2,y1,y2是要修改的矩形坐标
+
+{ 
+    if (x1 == first &#38;&#38; last == x2) 
+        Modify_y(root, 0, 1, n, y1, y2); //0是当前外层节点包含的内层线段树的根节点
+    else {
+        int mid = (first+last)/2;      
+        if (x2 &lt;= mid) 
+            Modify_x((root&lt;&lt;1)+1, first, mid, x1, x2, y1, y2);      
+        else if (x1 &gt; mid) 
+            Modify_x((root&lt;&lt;1)+2, mid+1, last, x1, x2, y1, y2);      
+        else{    
+            Modify_x((root&lt;&lt;1)+1, first, mid, x1, mid, y1, y2);           
+            Modify_x((root&lt;&lt;1)+2, mid+1, last, mid+1, x2, y1, y2);      
+        } 
+    }
+}
+
+/*
+* 查询过程:
+* 首先明确一点, 一维情况下, 查找单个点时, 找到路径上一定会遍历所有包含该点的线段.
+* 那么在二维情况下, 查找一个点就需要遍历所有包含该点的矩形. 
+*/
+void Query_y(int rootx, int rooty, int first, int last, int y)
+{     
+    sum ^= a[rootx][rooty];     
+    if (first &lt; last)
+    {          
+        int mid = (first+last)/2; 
+        if (y &lt;= mid) 
+            Query_y(rootx, (rooty&lt;&lt;1)+1, first, mid, y);          
+        else 
+            Query_y(rootx, (rooty&lt;&lt;1)+2, mid+1, last, y);     
+    }
+}
+
+void Query_x(int root, int first, int last, int x, int y)
+//root是外层线段树的节点
+//first,last是该节点的左右端点
+//x是外维的坐标
+//y是内维的坐标
+//查询的结果是坐标为(x,y)的元素的值，放在sum里面
+
+{     
+    Query_y(root, 0, 1, n, y); 
+    if (first &lt; last)
+    {          
+        int mid = (first+last)/2;          
+        if (x &lt;= mid) 
+            Query_x((root&lt;&lt;1)+1, first, mid, x, y);          
+        else 
+            Query_x((root&lt;&lt;1)+2, mid+1, last, x, y);     
+    }
+}
+
+int main()
+{   
+    int cases, t, x1, y1, x2, y2;     
+    char op;     
+    scanf(&#34;%d&#34;, &#38;cases); 
+    while (cases--)
+    {
+        scanf(&#34;%d%d&#34;, &#38;n, &#38;t);          
+        memset(a, 0, sizeof(a)); 
+        while (t--)
+        {
+            scanf(&#34;%*c%c&#34;, &#38;op); 
+            if (op == &#39;C&#39;)
+            {                
+                scanf(&#34;%d%d%d%d&#34;, &#38;x1, &#38;y1, &#38;x2, &#38;y2);
+                Modify_x(0, 1, n, x1, x2, y1, y2); 
+            }
+            else{                    
+                scanf(&#34;%d%d&#34;, &#38;x1, &#38;y1); 
+                sum = 0;                    
+                Query_x(0, 1, n, x1, y1);
+                printf(&#34;%d\n&#34;, sum);               
+            }
+        }
+        putchar(&#39;\n&#39;);
+    }
+}
+</b></pre>
+</ul>
+</body></html>

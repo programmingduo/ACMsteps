@@ -1,0 +1,126 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="en-US">
+<title>Source Code</title>
+<link type="text/css" rel="stylesheet" href="sh_style.css">
+<script type="text/javascript" src="sh_main.js"></script>
+<script type="text/javascript" src="lang/sh_cpp.js"></script>
+</head><body lang="en-US" link=blue alink=blue vlink=blue onload="sh_highlightDocument()">
+<p align=center><b><font size=4 color=#333399>Source Code</font></b></p>
+<table align="center" style="font-size:10pt"><tr><td><b>Problem: <a href="problem?id=3468">3468</a></b></td><td width=10px></td><td><b>User: <a href="userstatus?user_id=mulan">mulan</a></b></td></tr>
+<tr><td><b>Memory: 6408K</b></td><td width=10px></td><td><b>Time: 1969MS</b></td></tr>
+<tr><td><b>Language: C++</b></td><td width=10px></td><td><b>Result: <font color=blue>Accepted</font></b></td></tr></table>
+<ul><li><b><font color=#333399 size=5>Source Code</font></li>
+</b>
+<pre class="sh_cpp" style="font-family:Courier New,Courier,monospace"><b>#include &lt;iostream&gt;
+using namespace std;
+
+
+struct CNode 
+{
+	int L ,R;
+	CNode * pLeft, * pRight;
+	long long nSum; //原来的和
+	long long Inc; //增量c的累加
+};
+
+CNode Tree[1000000];
+
+int nCount = 0;
+int Mid( CNode * pRoot)
+{
+	return (pRoot-&gt;L + pRoot-&gt;R)/2;
+}
+void BuildTree(CNode * pRoot,int L, int R)
+{
+	pRoot-&gt;L = L;
+	pRoot-&gt;R = R;
+	pRoot-&gt;nSum = 0;
+	pRoot-&gt;Inc = 0;
+	if( L == R)
+		return;
+	nCount ++;
+	pRoot-&gt;pLeft = Tree + nCount;
+	nCount ++;
+	pRoot-&gt;pRight = Tree + nCount;
+	BuildTree(pRoot-&gt;pLeft,L,(L+R)/2);
+	BuildTree(pRoot-&gt;pRight,(L+R)/2+1,R);
+}
+void Insert( CNode * pRoot,int i, int v)
+{
+	if( pRoot-&gt;L == i &#38;&#38; pRoot-&gt;R == i) {
+		pRoot-&gt;nSum = v;
+		return ;
+	}
+	pRoot-&gt;nSum += v;
+	if( i &lt;= Mid(pRoot))
+		Insert(pRoot-&gt;pLeft,i,v);
+	else
+		Insert(pRoot-&gt;pRight,i,v);
+}
+void Add( CNode * pRoot, int a, int b, long long c)
+{
+	if( pRoot-&gt;L == a &#38;&#38; pRoot-&gt;R == b) {
+		pRoot-&gt;Inc += c;
+		return ;
+	}
+	pRoot-&gt;nSum += c * ( b - a + 1) ;
+	if( b &lt;= (pRoot-&gt;L + pRoot-&gt;R)/2)
+		Add(pRoot-&gt;pLeft,a,b,c);
+	else if( a &gt;= (pRoot-&gt;L + pRoot-&gt;R)/2 +1)
+		Add(pRoot-&gt;pRight,a,b,c);
+	else {
+		
+		Add(pRoot-&gt;pLeft,a,(pRoot-&gt;L + pRoot-&gt;R)/2 ,c); 
+		Add(pRoot-&gt;pRight,(pRoot-&gt;L + pRoot-&gt;R)/2 + 1,b,c);
+	}
+}
+
+long long QuerynSum( CNode * pRoot, int a, int b)
+{
+	if( pRoot-&gt;L == a &#38;&#38; pRoot-&gt;R == b)
+		return pRoot-&gt;nSum + (pRoot-&gt;R - pRoot-&gt;L + 1) * pRoot-&gt;Inc ;
+
+	pRoot-&gt;nSum += (pRoot-&gt;R - pRoot-&gt;L + 1) * pRoot-&gt;Inc ;
+	Add( pRoot-&gt;pLeft,pRoot-&gt;L,Mid(pRoot),pRoot-&gt;Inc);
+	Add( pRoot-&gt;pRight,Mid(pRoot) + 1,pRoot-&gt;R,pRoot-&gt;Inc);
+	pRoot-&gt;Inc = 0;
+
+	if( b &lt;= Mid(pRoot)) 
+		return QuerynSum(pRoot-&gt;pLeft,a,b);
+	else if( a &gt;= Mid(pRoot) + 1) 
+		return QuerynSum(pRoot-&gt;pRight,a,b);
+	else {
+		return QuerynSum(pRoot-&gt;pLeft,a,Mid(pRoot)) + 
+			   QuerynSum(pRoot-&gt;pRight,Mid(pRoot) + 1,b);
+	}
+}
+int main()
+{
+	int n,q,a,b,c;
+	char cmd[10];
+	
+	scanf(&#34;%d%d&#34;,&#38;n,&#38;q);
+	int i,j,k;
+	nCount = 0;
+	BuildTree(Tree,1,n);
+	for( i = 1;i &lt;= n;i ++ ) {
+		scanf(&#34;%d&#34;,&#38;a);
+		Insert(Tree,i,a);
+	}
+	for( i = 0;i &lt; q;i ++ ) {
+		
+		scanf(&#34;%s&#34;,cmd);
+		if ( cmd[0] == &#39;C&#39; ) {
+			scanf(&#34;%d%d%d&#34;,&#38;a,&#38;b,&#38;c);
+			Add( Tree,a,b,c);
+		}
+		else {
+			scanf(&#34;%d%d&#34;,&#38;a,&#38;b);
+			printf(&#34;%I64d\n&#34;,QuerynSum(Tree,a,b));
+		}
+	}
+	return 0;
+}</b></pre>
+</ul>
+</body></html>

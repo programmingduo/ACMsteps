@@ -1,0 +1,59 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="en-US">
+<title>Source Code</title>
+<link type="text/css" rel="stylesheet" href="sh_style.css">
+<script type="text/javascript" src="sh_main.js"></script>
+<script type="text/javascript" src="lang/sh_cpp.js"></script>
+</head><body lang="en-US" link=blue alink=blue vlink=blue onload="sh_highlightDocument()">
+<p align=center><font size=4 color=#333399>Source Code</font></p>
+<table align="center" style="font-size:10pt"><tr><td><b>Problem:</b> <a href="problem?id=2352">2352</a></td><td width=10px></td><td><b>User:</b> <a href="userstatus?user_id=T6">T6</a></td></tr>
+<tr><td><b>Memory:</b> 748K</td><td width=10px></td><td><b>Time:</b> 32MS</td></tr>
+<tr><td><b>Language:</b> G++</td><td width=10px></td><td><b>Result:</b> <font color=blue>Accepted</font></td></tr></table>
+<ul><li><font color=#333399 size=5>Source Code</font></li>
+<pre class="sh_cpp" style="font-family:Courier New,Courier,monospace">#include &lt;stdio.h&gt;
+#include &lt;memory.h&gt;
+
+const int MAXX = 32000;
+
+int f[(MAXX + 1) * 3];
+int level[15001];
+inline void read(int &#38;d) {
+        char ch = getchar();
+        while (ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;)ch=getchar();d=0;
+        do{d = d*10+ch-&#39;0&#39;;ch=getchar();}
+        while(ch&gt;= &#39;0&#39;&#38;&#38;ch &lt;= &#39;9&#39;);
+}
+int main()
+{
+        int i, k, l, r, s, n, x, y, mid;
+        memset(f, 0, sizeof(f));
+        scanf(&#34;%d&#34;, &#38;n);
+        for (i = 0; i &lt; n; i++)
+        {
+                read(x);read(y);
+                s = 0; k = 1; l = 0; r = MAXX;
+                while (l &lt; r)
+                {
+                        mid = (l + r) &gt;&gt; 1;
+                        if (x &gt; mid)
+                        {
+                                l = mid + 1; s += f[k]; k &lt;&lt;= 1; k++;
+                        }
+                        else
+                        {
+                                r = mid; f[k]++; k = k &lt;&lt; 1;
+                        }
+                }
+                s += f[k]; f[k]++;
+                level[s]++;
+
+        }
+        for (i = 0; i &lt; n; i++)
+                printf(&#34;%d\n&#34;, level[i]);
+        return 0;
+}
+
+</pre>
+</ul>
+</body></html>

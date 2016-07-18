@@ -1,0 +1,90 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="en-US">
+<title>Source Code</title>
+<link type="text/css" rel="stylesheet" href="sh_style.css">
+<script type="text/javascript" src="sh_main.js"></script>
+<script type="text/javascript" src="lang/sh_cpp.js"></script>
+</head><body lang="en-US" link=blue alink=blue vlink=blue onload="sh_highlightDocument()">
+<p align=center><b><font size=4 color=#333399>Source Code</font></b></p>
+<table align="center" style="font-size:10pt"><tr><td><b>Problem: <a href="problem?id=1195">1195</a></b></td><td width=10px></td><td><b>User: <a href="userstatus?user_id=guowei">guowei</a></b></td></tr>
+<tr><td><b>Memory: 4904K</b></td><td width=10px></td><td><b>Time: 625MS</b></td></tr>
+<tr><td><b>Language: C++</b></td><td width=10px></td><td><b>Result: <font color=blue>Accepted</font></b></td></tr></table>
+<ul><li><b><font color=#333399 size=5>Source Code</font></li>
+</b>
+<pre class="sh_cpp" style="font-family:Courier New,Courier,monospace"><b>//
+/*二维树状数组做
+*/
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+#define MY_MAX 1100
+//#define MY_MAX 5
+int C[MY_MAX][MY_MAX];
+int Lowbit[MY_MAX];
+int s;
+/*
+C[x][y] = Sum(a[i][j])
+
+  x-lowbit[x]+1&lt;=i&lt;=x
+  y-lowbit[y]+1&lt;=j&lt;=y
+
+*/
+void Add( int y, int x,int a)
+{
+	while( y &lt;= s ) {
+		int tmpx = x;
+		while( tmpx &lt;= s ) {
+			C[y][tmpx] += a;
+			tmpx += Lowbit[tmpx];
+		}
+		y += Lowbit[y];
+	}
+}
+int QuerySum( int y, int x)
+//查询第1行到第y行，第1列到第x列的和
+{
+	int nSum = 0;
+	while( y &gt; 0 ) {
+		int tmpx = x;
+		while( tmpx &gt; 0) {
+			nSum += C[y][tmpx];
+			tmpx -= Lowbit[tmpx];
+		}
+		y -= Lowbit[y];
+	}
+	return nSum;
+}
+
+int main()
+{
+	int cmd;	
+	int x,y,a,l,b,r,t;	
+	int i,j,k;
+	int n1,n2;
+	for( i = 1;i &lt;= MY_MAX;i ++ )
+		Lowbit[i] = i &#38; ( i ^(i - 1));
+	while( true) {
+		scanf(&#34;%d&#34;,&#38;cmd);
+		switch( cmd) {
+			case 0:
+				scanf(&#34;%d&#34;,&#38; s);
+				memset( C,0,sizeof(C));
+				break;
+			case 1:
+				scanf(&#34;%d%d%d&#34;,&#38;x ,&#38;y,&#38;a);
+				Add( y + 1, x + 1, a);
+				break;
+			case 2:
+				scanf(&#34;%d%d%d%d&#34;,&#38;l , &#38;b, &#38;r,&#38;t);
+				int n1,n2,n3,n4;
+				l ++; b++; r ++; t ++;
+				printf(&#34;%d\n&#34;,QuerySum(t,r) + QuerySum(b-1,l-1) - QuerySum(t,l-1) - QuerySum(b-1,r));
+				break;
+			case 3:
+				return 0;
+		}
+	}
+}</b></pre>
+</ul>
+</body></html>

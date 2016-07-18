@@ -1,0 +1,111 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="en-US">
+<title>Source Code</title>
+<link type="text/css" rel="stylesheet" href="sh_style.css">
+<script type="text/javascript" src="sh_main.js"></script>
+<script type="text/javascript" src="lang/sh_cpp.js"></script>
+</head><body lang="en-US" link=blue alink=blue vlink=blue onload="sh_highlightDocument()">
+<p align=center><b><font size=4 color=#333399>Source Code</font></b></p>
+<table align="center" style="font-size:10pt"><tr><td><b>Problem: <a href="problem?id=3321">3321</a></b></td><td width=10px></td><td><b>User: <a href="userstatus?user_id=guowei">guowei</a></b></td></tr>
+<tr><td><b>Memory: 9452K</b></td><td width=10px></td><td><b>Time: 1094MS</b></td></tr>
+<tr><td><b>Language: C++</b></td><td width=10px></td><td><b>Result: <font color=blue>Accepted</font></b></td></tr></table>
+<ul><li><b><font color=#333399 size=5>Source Code</font></li>
+</b>
+<pre class="sh_cpp" style="font-family:Courier New,Courier,monospace"><b>//树状数组做
+/*
+一棵树上长了苹果，每一个树枝节点上有长苹果和不长苹果两种状态，两种操作，一种操作能够改变树枝上苹果的状态，
+另一种操作询问某一树枝节点一下的所有的苹果有多少。具体做法是做一次dfs，记下每个节点的开始时间Start[i]和结束时间End[i]，
+那么对于i节点的所有子孙的开始时间和结束时间都应位于Start[i]和End[i]之间，另外用一个数组C[i]记录附加在节点i上的苹果的个数，
+然后用树状数组统计Start[i]到End[i]之间的附加苹果总数。这里用树状数组统计区间可以用Sum(Start[i])-Sum(End[i]-1)来计算。 
+*/
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+#define MY_MAX 220000
+
+int C[MY_MAX];
+typedef vector&lt;int&gt; VCT_INT;
+vector&lt;VCT_INT&gt; G(MY_MAX/2);
+int Lowbit[MY_MAX];
+bool HasApple[MY_MAX/2];
+int Start[MY_MAX]; //dfs时的开始时间
+int End[MY_MAX]; //dfs时的结束时间
+int nCount ;
+void Dfs(int v)
+{
+	Start[v] = ++ nCount;
+	for( int i = 0;i &lt; G[v].size();i ++ ) 
+		Dfs(G[v][i]);
+	End[v] = ++ nCount;
+}
+int QuerySum(int p)
+{
+	int nSum = 0;
+	while( p &gt; 0 ) {
+		nSum += C[p];
+		p -= Lowbit[p];
+	}
+	return nSum;
+}
+void Modify( int p,int val)
+{
+	while( p &lt;= nCount ) {
+		C[p] += val;
+		p += Lowbit[p];
+	}
+}
+int main()
+{
+	int n;	
+	scanf(&#34;%d&#34;,&#38;n);
+	int x,y;
+	int i,j,k;
+	//建图
+	for( i = 0;i &lt; n -1 ;i ++ ) {
+		int a,b;
+		scanf(&#34;%d%d&#34;,&#38;a,&#38;b);
+		G[a].push_back(b);
+	}
+	nCount = 0;
+	Dfs(1);
+	//树状数组要处理的原始数组下标范围 1 -- nCount
+	for( i = 1;i &lt;= nCount;i ++) {
+		Lowbit[i] = i &#38; ( i ^( i - 1));
+	}
+	for( i = 1;i &lt;= n;i ++ )
+		HasApple[i] = 1;
+
+	int m;
+	//求C数组，即树状数组的节点的值
+	for( i = 1;i &lt;= nCount;i ++ )
+		C[i] = i - (i - Lowbit[i] + 1) + 1;
+	
+
+	scanf(&#34;%d&#34;,&#38;m);
+	for( i = 0;i &lt; m;i ++ ) {
+		char cmd[10];
+		int a;
+		scanf(&#34;%s%d&#34;,cmd,&#38;a);
+		if( cmd[0] == &#39;C&#39; ) {
+			if( HasApple[a] ) {
+				Modify( Start[a],-1);
+				Modify( End[a],-1);
+				HasApple[a] = 0;
+			}
+			else {
+				Modify( Start[a],1);
+				Modify( End[a],1);
+				HasApple[a] = 1;
+			}
+		}
+		else {
+			int t1 = QuerySum(End[a]);
+			int t2 = QuerySum(Start[a]);
+			printf(&#34;%d\n&#34;,(QuerySum(End[a]) - QuerySum(Start[a]))/2 + HasApple[a]);
+				
+		}
+	}
+}</b></pre>
+</ul>
+</body></html>

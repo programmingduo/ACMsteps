@@ -1,0 +1,324 @@
+From: <ÓÉ Microsoft Internet Explorer 5 ±£´æ>
+Subject: The Skyline Problem
+Date: Thu, 11 May 2006 23:12:53 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_01C67550.6E054370"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2869
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://acm.uva.es/p/v1/105.html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos =
+(nikos@cbl.leeds.ac.uk), CBLU, University of Leeds =
+--><HTML><HEAD><TITLE>The Skyline Problem</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"The Skyline Problem" name=3Ddescription>
+<META content=3Dhtmlatex name=3Dkeywords>
+<META content=3Ddocument name=3Dresource-type>
+<META content=3Dglobal name=3Ddistribution><LINK=20
+href=3D"http://acm.uva.es/p/v1/htmlatex.css" rel=3DSTYLESHEET>
+<META content=3D"MSHTML 6.00.2900.2873" name=3DGENERATOR></HEAD>
+<BODY lang=3DEN bgColor=3D#ffffff>
+<H1><BR clear=3Dall>
+<CENTER>
+<TABLE bgColor=3D#0060f0>
+  <TBODY>
+  <TR>
+    <TD><B><FONT color=3D#c0ffff size=3D5>&nbsp;<A=20
+      name=3DSECTION0001000000000000000000>The Skyline=20
+  Problem</A></FONT>&nbsp;</B></TR></TBODY></TABLE></CENTER></H1>
+<P>
+<H2><FONT color=3D#0070e8><A=20
+name=3DSECTION0001001000000000000000>Background</A></FONT></H2>
+<P>With the advent of high speed graphics workstations, CAD =
+(computer-aided=20
+design) and other areas (CAM, VLSI design) have made increasingly =
+effective use=20
+of computers. One of the problems with drawing images is the elimination =
+of=20
+hidden lines -- lines obscured by other parts of a drawing.=20
+<P>
+<H2><FONT color=3D#0070e8><A name=3DSECTION0001002000000000000000>The=20
+Problem</A></FONT></H2>
+<P>You are to design a program to assist an architect in drawing the =
+skyline of=20
+a city given the locations of the buildings in the city. To make the =
+problem=20
+tractable, all buildings are rectangular in shape and they share a =
+common bottom=20
+(the city they are built in is very flat). The city is also viewed as=20
+two-dimensional. A building is specified by an ordered triple <IMG =
+height=3D27=20
+alt=3Dtex2html_wrap_inline149 src=3D"http://acm.uva.es/p/v1/105img1.gif" =
+width=3D81=20
+align=3Dmiddle> where <IMG height=3D25 alt=3Dtex2html_wrap_inline151=20
+src=3D"http://acm.uva.es/p/v1/105img2.gif" width=3D15 align=3Dmiddle> =
+and <IMG=20
+height=3D25 alt=3Dtex2html_wrap_inline153 =
+src=3D"http://acm.uva.es/p/v1/105img3.gif"=20
+width=3D16 align=3Dmiddle> are left and right coordinates, respectively, =
+of building=20
+<I>i</I> and <IMG height=3D25 alt=3Dtex2html_wrap_inline157=20
+src=3D"http://acm.uva.es/p/v1/105img4.gif" width=3D18 align=3Dmiddle> is =
+the height of=20
+the building. In the diagram below buildings are shown on the left with =
+triples=20
+(1,11,5), (2,6,7), (3,13,9), (12,7,16), (14,3,25), (19,18,22), =
+(23,13,29),=20
+(24,4,28)=20
+<P>the skyline, shown on the right, is represented by the sequence: (1, =
+11, 3,=20
+13, 9, 0, 12, 7, 16, 3, 19, 18, 22, 3, 23, 13, 29, 0)=20
+<P>
+<P><IMG height=3D173 alt=3Dfigure26 =
+src=3D"http://acm.uva.es/p/v1/105img5.gif"=20
+width=3D535 align=3Dbottom>=20
+<P>
+<H2><FONT color=3D#0070e8><A name=3DSECTION0001003000000000000000>The=20
+Input</A></FONT></H2>
+<P>The input is a sequence of building triples. All coordinates of =
+buildings are=20
+positive integers less than 10,000 and there will be at least one and at =
+most=20
+5,000 buildings in the input file. Each building triple is on a line by =
+itself=20
+in the input file. All integers in a triple are separated by one or more =
+spaces.=20
+The triples will be sorted by <IMG height=3D25 =
+alt=3Dtex2html_wrap_inline151=20
+src=3D"http://acm.uva.es/p/v1/105img2.gif" width=3D15 align=3Dmiddle> , =
+the left=20
+<I>x</I>-coordinate of the building, so the building with the smallest =
+left=20
+<I>x</I>-coordinate is first in the input file.=20
+<H2><FONT color=3D#0070e8><A name=3DSECTION0001004000000000000000>The=20
+Output</A></FONT></H2>
+<P>The output should consist of the vector that describes the skyline as =
+shown=20
+in the example above. In the skyline vector <IMG height=3D27=20
+alt=3Dtex2html_wrap_inline183 src=3D"http://acm.uva.es/p/v1/105img6.gif" =
+width=3D215=20
+align=3Dmiddle> , the <IMG height=3D17 alt=3Dtex2html_wrap_inline185=20
+src=3D"http://acm.uva.es/p/v1/105img7.gif" width=3D11 align=3Dmiddle> =
+such that=20
+<I>i</I> is an even number represent a horizontal line (height). The =
+<IMG=20
+height=3D17 alt=3Dtex2html_wrap_inline185 =
+src=3D"http://acm.uva.es/p/v1/105img7.gif"=20
+width=3D11 align=3Dmiddle> such that <I>i</I> is an odd number represent =
+a vertical=20
+line (<I>x</I>-coordinate). The skyline vector should represent the =
+``path''=20
+taken, for example, by a bug starting at the minimum <I>x</I>-coordinate =
+and=20
+traveling horizontally and vertically over all the lines that define the =
+
+skyline. Thus the last entry in the skyline vector will be a 0. The =
+coordinates=20
+must be separated by a blank space.=20
+<P>
+<H2><FONT color=3D#0070e8><A name=3DSECTION0001005000000000000000>Sample =
+
+Input</A></FONT></H2>
+<P><PRE>1 11 5
+2 6 7
+3 13 9
+12 7 16
+14 3 25
+19 18 22
+23 13 29
+24 4 28</PRE>
+<P>
+<H2><FONT color=3D#0070e8><A name=3DSECTION0001006000000000000000>Sample =
+
+Output</A></FONT></H2>
+<P><PRE>1 11 3 13 9 0 12 7 16 3 19 18 22 3 23 13 29 0</PRE>
+<P></P></BODY></HTML>
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://acm.uva.es/p/v1/105img1.gif
+
+R0lGODlhUQAbAIAAAAAAAP///yH5BAEAAAEALAAAAABRABsAAAK3jGGpy+0Po0OKJoCzbFl3u30d
+Z2HkBpkXiB6guphwxbZrXIfsfPOufaIBf0JSLuAD8pKSmcY4ObZEzGZJikw+GdXVa4d1fXC0XLVL
+vBVT33XWvFO2h1k317et69lzNd/rJ3b34qflBBYISISwlEelwqjoJTOGZClYBskog4NGVkG3d6BD
+sTQ6dZk6FHmqlKo5RRjqREd7EaqK24prquv7ewssPExcbHyMnKy8zNzs/AwdLT1NHV0AADs=
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://acm.uva.es/p/v1/105img2.gif
+
+R0lGODlhDwAZAIAAAAAAAP///yH5BAEAAAEALAAAAAAPABkAAAIrTIBpy4YND4jwUWavm1ryymXg
+1nyLcoaq+T3Ja03mJdJHJ+H6zvf+DwxGCgA7
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://acm.uva.es/p/v1/105img3.gif
+
+R0lGODlhEAAZAIAAAAAAAP///yH5BAEAAAEALAAAAAAQABkAAAIyTICZxo0OGntQGjqjxYfnb3WK
+BnKmdobLhVFrd8EjKx4hi5L3ZO+gDwwKh8Si8YgcFgAAOw==
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://acm.uva.es/p/v1/105img4.gif
+
+R0lGODlhEgAZAIAAAAAAAP///yH5BAEAAAEALAAAAAASABkAAAI1TIB5CeaOXnyyVXozXnRuxmyG
+AlnlaKKd5XEiqWawe4JLeOTil+6Q7jsFh8Si8YhMKpfMRwEAOw==
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://acm.uva.es/p/v1/105img5.gif
+
+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
+vAFQAAA7
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://acm.uva.es/p/v1/105img6.gif
+
+R0lGODlh1wAbAIAAAAAAAP///yH5BAEAAAEALAAAAADXABsAAAL+jGGpy+0Po5y02oszRorrD4bi
+SJabB3jmyrbuG6aBDNf2ja8ynff+D+zwErQhpag6coxBpM1Zg0ZSScQuKbFqL1vmr4vVzbYw8IS6
+QB+4vDBEPQsKUdF2nZ5l2g/uNJ7aR0QH2ITH5sWwl4HoR3Sm1yF4Fhk3NhW5FPiioumQmUW52Fm5
+loeFgjrJV8pYain5JXml2uo6Wyuk+jrrd+oIu5r4m/uaNgxXLFhlhOxlSFjRFvaMPMU5PTymVw0N
+rJ1YXRzeDczNfH59qmZlC9icDl5Uiep+PRc/6Ko8mqxvTQrQkyF/I0bJ41NPlrE87RJ6IyiQ4BIl
+C4/YepSNnwVYfrdAAeTYBWMohjtg4XKXzRockM1YgPymcsjLcA1QQozYMmW0GDzF9NBIAmjEkXKK
+Gj3KBanSpUybOn0KNarUqVSrWr2KNavWrVy7ev0KNqzYsWTLmn1RAAA7
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://acm.uva.es/p/v1/105img7.gif
+
+R0lGODlhCwARAIAAAAAAAP///yH5BAEAAAEALAAAAAALABEAAAIfDBCGaep8VnMHpiqnvajq5UWg
+xkBZ2ZwmyrbuC8dxAQA7
+
+------=_NextPart_000_0000_01C67550.6E054370
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: 7bit
+Content-Location: http://acm.uva.es/p/v1/htmlatex.css
+
+SMALL.TINY {
+	FONT-SIZE: xx-small
+}
+SMALL.SCRIPTSIZE {
+	FONT-SIZE: xx-small
+}
+SMALL.FOOTNOTESIZE {
+	FONT-SIZE: x-small
+}
+SMALL.SMALL {
+	FONT-SIZE: small
+}
+BIG.LARGE {
+	FONT-SIZE: large
+}
+BIG.XLARGE {
+	FONT-SIZE: x-large
+}
+BIG.XXLARGE {
+	FONT-SIZE: xx-large
+}
+BIG.HUGE {
+	FONT-SIZE: xx-large
+}
+BIG.XHUGE {
+	FONT-SIZE: xx-large
+}
+
+------=_NextPart_000_0000_01C67550.6E054370--

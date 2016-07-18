@@ -1,0 +1,111 @@
+A {
+	TEXT-TRANSFORM: none; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: red; TEXT-DECORATION: underline
+}
+A.s {
+	TEXT-TRANSFORM: none; COLOR: black; TEXT-DECORATION: none
+}
+A.s:hover {
+	COLOR: white; TEXT-DECORATION: none
+}
+A.s0 {
+	TEXT-TRANSFORM: none; COLOR: #ffff99; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.s0:hover {
+	COLOR: #ffff99; FONT-WEIGHT: bold; TEXT-DECORATION: underline
+}
+A.t {
+	COLOR: #ffff66; TEXT-DECORATION: none
+}
+A.t:hover {
+	COLOR: #ffff66; TEXT-DECORATION: underline
+}
+A.x {
+	COLOR: white; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.x:hover {
+	COLOR: #ffff66; FONT-WEIGHT: bold; TEXT-DECORATION: underline
+}
+A.bt {
+	PADDING-BOTTOM: 2px; MARGIN: 0px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; HEIGHT: 20px; COLOR: blue; FONT-SIZE: 12px; PADDING-TOP: 2px
+}
+A.bt:hover {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; PADDING-BOTTOM: 1px; BACKGROUND-COLOR: #e6e6e6; MARGIN: 0px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px; HEIGHT: 20px; COLOR: #000066; BORDER-TOP: #999 1px solid; CURSOR: hand; BORDER-RIGHT: #999 1px solid; TEXT-DECORATION: none; PADDING-TOP: 1px
+}
+DIV.sd1 {
+	POSITION: absolute; LEFT: 0px
+}
+DIV.sd2 {
+	POSITION: absolute; RIGHT: 0px
+}
+DIV.ptt {
+	TEXT-ALIGN: center; FONT-FAMILY: Arial,Helvetica,sans-serif; COLOR: blue; FONT-SIZE: 18pt; FONT-WEIGHT: bold
+}
+DIV.plm {
+	TEXT-ALIGN: center; FONT-FAMILY: Arial,Helvetica,sans-serif; FONT-SIZE: 12pt
+}
+DIV.ptx {
+	FONT-FAMILY: "Times New Roman",Times,serif; FONT-SIZE: 12pt
+}
+P.pst {
+	TEXT-ALIGN: left; FONT-FAMILY: Arial,Helvetica,sans-serif; COLOR: blue; FONT-SIZE: 18pt; FONT-WEIGHT: bold
+}
+PRE.sio {
+	FONT-FAMILY: Courier New,Courier,monospace; FONT-SIZE: 12pt
+}
+TH.h {
+	WIDTH: 20%; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #ffffff
+}
+TD.h {
+	FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+TH.in {
+	BORDER-BOTTOM-COLOR: #ffffff; TEXT-ALIGN: center; BACKGROUND-COLOR: #6589d1; BORDER-TOP-COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #ffffff; BORDER-RIGHT-COLOR: #ffffff; BORDER-LEFT-COLOR: #ffffff; FONT-WEIGHT: bold
+}
+TABLE.a {
+	BACKGROUND-IMAGE: url(images/table_back.jpg); BORDER-COLLAPSE: collapse; FONT-FAMILY: "Times New Roman", Times, serif
+}
+TABLE.h1 {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #becef1; WIDTH: 100%; BORDER-COLLAPSE: collapse; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+TABLE.h2 {
+	BORDER-RIGHT-WIDTH: 0px; WIDTH: 100%; BACKGROUND: url(images/bar.jpg) repeat-y; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+TR.in {
+	TEXT-ALIGN: center; BACKGROUND-COLOR: #6589d1; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #ffffff; FONT-WEIGHT: bold
+}
+TR.h {
+	BACKGROUND-COLOR: #6589d1; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #ffffff; VERTICAL-ALIGN: top
+}
+SPAN.b1 {
+	COLOR: #6589d1; FONT-SIZE: x-small; FONT-WEIGHT: bold
+}
+SPAN.b2 {
+	COLOR: gray; FONT-SIZE: x-small
+}
+SPAN.n1 {
+	COLOR: red; FONT-SIZE: x-small
+}
+UL.v {
+	FILTER: Alpha(opacity=100); OVERFLOW: hidden
+}
+TABLE.survey {
+	BORDER-COLLAPSE: collapse; FONT-FAMILY: "Times New Roman", Times, serif
+}
+.stdft {
+	FONT-FAMILY: "Times New Roman", Times, serif
+}
+SPAN.h_txt {
+	COLOR: blue
+}
+SPAN.h_award {
+	COLOR: red
+}
+SPAN.h_nocontest {
+	COLOR: #1a5cc8
+}
+SPAN.h_contest {
+	COLOR: red
+}

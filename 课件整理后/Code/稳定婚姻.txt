@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <iostream>
+#include <string.h>
+#include <queue>
+using namespace std;
+int boy[27][27],girl[27][27];
+int man[27];
+int n;
+queue<int> q;
+void Stable_Marriage()
+{
+	int M,mlike;int mh[30],fh[30];
+	memset(mh,0,sizeof(mh));
+	memset(fh,-1,sizeof(fh));
+	while(!q.empty())
+	{
+		M=q.front();
+		q.pop();
+		mlike=boy[M][mh[M]];
+		mh[M]++;
+		if(fh[mlike]<0) fh[mlike]=M;
+		else if(girl[mlike][fh[mlike]]<girl[mlike][M])
+		{
+			q.push(M);
+		}
+		else
+		{
+			q.push(fh[mlike]);
+			fh[mlike]=M;
+		}
+
+	}
+	for(int i=0;i<n;i++)
+		if(fh[i]>-1) mh[fh[i]]=i;
+	for(int i=0;i<n;i++)
+	{
+		printf("%c %c\n",man[i]+'a',mh[man[i]]+'A');
+	}
+}
+int main()
+{
+	int t;char Boys,Girls;char temp[30];
+	scanf("%d",&t);
+	while(t--)
+	{
+		while(!q.empty())
+			q.pop();
+		memset(boy,0,sizeof(boy));
+		memset(girl,0,sizeof(girl));
+		scanf("%d",&n);
+		for(int i=0;i<n;i++)
+		{
+			scanf(" %c",&Boys);
+			q.push(Boys-'a');
+			man[i]=Boys-'a';
+		}
+		sort(man,man+n);
+		for(int i=0;i<n;i++)
+			scanf(" %c",&Girls);
+		for(int i=0;i<n;i++)
+		{
+			scanf("%s",temp);
+			for(int j=0;j<n;j++)
+			{
+				boy[i][j]=temp[j+2]-'A';
+			}
+		}
+		for(int j=0;j<n;j++)
+		{
+			scanf("%s",temp);
+			for(int i=0;i<n;i++)
+			{
+				girl[j][temp[i+2]-'a']=i;
+			}
+		}
+		Stable_Marriage();
+		if(t)
+		printf("\n");
+	}
+}
+

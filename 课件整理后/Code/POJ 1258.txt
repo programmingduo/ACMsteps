@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+#define M 101
+#define maxnum 100001
+int dis[M][M];
+
+int prim(int n)
+{
+bool used[M]={0};
+int d[M],i,j,k;
+for(i=1; i<=n; i++)
+   d[i] = dis[1][i];
+used[1] = true;
+int sum=0;
+for(i=1; i<n; i++){
+   int temp=maxnum;
+   for(j=1; j<=n; j++){
+    if( !used[j] && d[j]<temp ){
+     temp = d[j];
+     k = j;
+    }
+   }
+   used[k] = true;
+   sum += d[k];
+  for(j=1; j<=n; j++){
+    if( !used[j] && dis[k][j]<d[j] )
+     d[j] = dis[k][j];        // 与Dijksta算法的差别之处
+   }
+}
+return sum;
+}
+
+int main()
+{
+int n,i,j;
+while( cin>>n ){
+
+   for(i=1; i<=n; i++){
+    for(j=1; j<=n; j++){
+     scanf("%d",&dis[i][j]);
+     if( !dis[i][j] )
+      dis[i][j] = maxnum;
+    }
+   }
+
+   cout<<prim(n)<<endl;
+}
+return 0;
+}
+

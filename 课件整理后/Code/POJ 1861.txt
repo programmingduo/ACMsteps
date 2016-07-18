@@ -1,0 +1,78 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int p[1001],rank[1001];
+int cho[1001];
+struct edge
+{
+	int u,v,w;
+}e[15001];
+int n,m;
+void Init()
+{
+	int i;
+	for(i=1;i<=n;i++)
+	{
+		p[i]=i;
+		rank[i]=0;
+	}
+}
+bool cmp(edge a,edge b)
+{
+	return a.w<b.w;
+}
+int Find(int t)
+{
+	if(p[t]!=t)
+	{
+		p[t]=Find(p[t]);
+	}
+	return p[t];
+}
+int Union(int a,int b)
+{
+	int x,y;
+	x=Find(a);
+	y=Find(b);
+	if(rank[x]>rank[y])
+	{
+		p[y]=x;
+	}
+	else
+	{
+		p[x]=y;
+		if(rank[x]==rank[y])
+			rank[y]++;
+	}
+	return 0;
+}
+int main()
+{
+	scanf("%d%d",&n,&m);
+	int i,j;
+	for(i=0;i<m;i++)
+	{
+		scanf("%d%d%d",&e[i].u,&e[i].v,&e[i].w);
+	}
+	Init();
+	sort(e,e+m,cmp);
+	int cnt=0;
+	for(i=0;i<m;i++)
+	{
+		if(Find(e[i].u)!=Find(e[i].v))
+		{
+			cnt++;
+			Union(e[i].u,e[i].v);
+			cho[++cho[0]]=i;
+			if(cnt==n-1)
+				break;
+		}
+	}
+	printf("%d %d\n",e[i].w,cnt);
+	for(j=1;j<=cho[0];j++)
+	{
+		printf("%d %d\n",e[cho[j]].u,e[cho[j]].v);
+
+	}
+	return 0;
+}

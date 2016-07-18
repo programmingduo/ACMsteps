@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0051)http://blog.csdn.net/jenus1/article/details/2227691 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET</title>
+
+<meta name="description" content="1 vector 内部实现: 数组 // 就是没有固定大小的数组，vector直接翻译是向量的意思支持操作:begin(), //取首个元素，返回一个iteratorend(), //取末尾（最后一个元素的下一个存储空间的地址）size(), //就是数组大小的意思clear(), //清空empty(), //判断vector是否为空[]  //很神奇的东东，可以和数组一样操作//举例： vec">
+<script type="text/javascript" async="" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ga.js"></script><script src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/jquery.js" type="text/javascript"></script>
+<script src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/plugins.js" type="text/javascript"></script>
+<script src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/common.js" type="text/javascript"></script>
+<link rel="Stylesheet" type="text/css" href="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/style.css">
+<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/jenus1/rss/list">
+<link rel="shortcut icon" href="http://blog.csdn.net/favicon.ico">
+<link type="text/css" rel="stylesheet" href="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/default.css">
+</head>
+<body>
+<script src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/pub_topnav_2011.js" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/navtop_2012.css">
+<div class="nav_top_2011">
+<p><span style="color:red;">您还未登录！</span>|<a href="http://passport.csdn.net/account/login">登录</a>|<a href="http://passport.csdn.net/account/register">注册</a>|<a href="http://passport.csdn.net/help/faq">帮助</a></p><ul>
+<li><a href="http://www.csdn.net/" target="_blank">CSDN首页</a></li>
+<li><a href="http://news.csdn.net/" target="_blank">资讯</a></li>
+<li><a href="http://bbs.csdn.net/" target="_blank">论坛</a></li>
+<li><a href="http://blog.csdn.net/" target="_blank">博客</a></li>
+<li><a href="http://download.csdn.net/" target="_blank">下载</a></li>
+<li><a href="http://so.csdn.net/" target="_blank">搜索</a></li>
+<li class="more"><h2 id="topnav_btnmore" onclick="showNavMore(this)"><a href="javascript:void(0);">更多</a></h2>
+<div id="topnav_hidlist">
+<iframe name="nav_frm" src="about:blank" width="92" height="262" scrolling="no" frameborder="no"></iframe>
+</div>
+</li>
+</ul>
+</div>
+
+
+<div id="container">
+<div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h1><a href="http://blog.csdn.net/jenus1">jenus1的专栏</a></h1>
+            <h2></h2>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg"></div>
+    <div class="navigator">
+        <ul>
+            <li id="btnContents"><a href="http://blog.csdn.net/jenus1?viewmode=contents"><span><img src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+            <li id="btnView"><a href="http://blog.csdn.net/jenus1?viewmode=list"><span><img src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+            <li id="btnRss"><a href="http://blog.csdn.net/jenus1/rss/list"><span><img src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>
+</ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "jenus1";
+    var blog_address = "http://blog.csdn.net/jenus1";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</script>
+        
+<div id="body">
+<div id="main">
+<div class="main">
+<div class="notice"> 
+
+
+<a href="http://cloud.csdn.net/a/20120620/2806805.html" target="_blank"><font color="red">用开源IaaS构建自己的云——OpenStack征稿启事
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://topic.csdn.net/u/20120709/15/2e6511e3-e34f-41d7-9f71-a47bb4f8c9fa.html" target="_blank"><font color="red">CSDN社区7月"畅谈加班 赢程序员杂志"活动火爆上线！！</font></a>
+<br>
+<a href="http://blog.csdn.net/shiningxyy/article/details/7717035" target="_blank"><font color="blue">
+iOS &amp; Android DevCamp社区会员特惠限时抢票！</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://topic.csdn.net/u/20120704/14/c98b3641-359f-4bea-b111-21c409db8819.html" target="_blank"><font color="red">CSDN账号全站整合公告
+</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://adclk.thinkmedia.cn/clk/pid=2000/media=CSDN.CN/place=1Clt1/size=760x90" target="_blank"><font color="blue">不用买彩票，就有408万！</font></a>
+
+
+</div><script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ad.js"></script>
+
+<div id="article_details" class="details">
+    <div class="article_title">
+    <span class="ico ico_type_Repost"></span>
+    <h3>
+        <span class="link_title"><a href="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET.htm">
+        C++ STL标准容器插入删除算法的复杂度（来源flyhorse）
+        </a></span>
+    </h3>
+</div>
+
+        
+    <div class="article_manage">
+    <span class="link_postdate">2008-03-29 11:42</span>
+    <span class="link_view" title="阅读次数">904人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="http://blog.csdn.net/jenus1/article/details/2227691#comments">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:collectArticle(&#39;C++ STL标准容器插入删除算法的复杂度（来源flyhorse）&#39;,&#39;2227691&#39;);return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="http://blog.csdn.net/jenus1/article/details/2227691#report" onclick="javascript:report(2227691,2);return false;" title="举报">举报</a></span>
+    
+</div>
+
+    
+<div id="article_content" class="article_content">
+    <font face="宋体">1 <strong>vector</strong> <br>内部实现: 数组 // 就是没有固定大小的数组，vector直接翻译是向量的意思<br>支持操作:<br>begin(), //取首个元素，返回一个iterator<br>end(), //取末尾（最后一个元素的下一个存储空间的地址）<br>size(), //就是数组大小的意思<br>clear(), //清空<br>empty(), //判断vector是否为空<br>[]&nbsp; //很神奇的东东，可以和数组一样操作<br>//举例： vector <int></int>a;&nbsp;&nbsp; //定义了一个vector<br>//然后我们就可以用a[i]来直接访问a中的第i + 1个元素！和数组的下标一模一样！<br>push_back(), pop_back() //从末尾插入或弹出<br>insert() O(N)&nbsp;//插入元素，O(n)的复杂度<br>erase()&nbsp;O(N)&nbsp; //删除某个元素，O(n)的复杂度<br>可以用于数组大小不定且空间紧张的情况</font>
+<p><font face="宋体">Sample: TOJ1743 King’s Treasure&nbsp; //这题如果直接开数组的话，需要开到一个240,000 * 240,000的二维数组<br>代码：<br>#include <cstdio></cstdio><br>#include <vector></vector><br>using namespace std;</font></p>
+<p><font face="宋体,sans-serif">vector <int></int>a[240010]; //一个vector组成的数组！</font></p>
+<p><font face="宋体,sans-serif">int main()<br>{<br>&nbsp;int cases,n,i,t,head,tail,src,pans;<br>&nbsp;scanf("%d",&amp;cases);<br>&nbsp;while (cases--) {<br>&nbsp;&nbsp;scanf("%d",&amp;n);<br>&nbsp;&nbsp;for (i = 1 ; i &lt;= n ; i++) a[i].clear();<br>&nbsp;&nbsp;for (i = 2 ; i &lt;= n ; i++) {<br>&nbsp;&nbsp;&nbsp;scanf("%d",&amp;t);<br>&nbsp;&nbsp;&nbsp;a[i].push_back(t);<br>&nbsp;&nbsp;&nbsp;a[t].push_back(i);<br>&nbsp;&nbsp;}<br>............</font></p>
+<p><font face="宋体,sans-serif">Iterator用法举例:<br>#include <vector></vector><br>#include <cstdio></cstdio><br>using namespace std;<br>int main()<br>{<br>&nbsp;int n,i;<br>&nbsp;vector <int></int>vi; //类似于我们定义一个数组，同 int vi[1000]; 但vector的大小是自动调整的<br>&nbsp;vector <int></int>::iterator itr;&nbsp; //两个冒号，很怪的定义方式，但就是这么定义的<br>&nbsp;while (scanf("%d",&amp;n) != EOF)<br>&nbsp;&nbsp;vi.push_back(n);<br>&nbsp;for (i = 0 ; i &lt; vi.size() ; i++)<br>&nbsp;&nbsp;printf("%d/n",vi[i]);<br>&nbsp;for (itr = vi.begin() ; itr != vi.end() ; itr++) //也支持++操作<br>&nbsp;&nbsp;printf("%d/n",*itr);<br>&nbsp;return 0;&nbsp;<br>}</font></p>
+<p><font face="宋体">2 <strong>deque</strong></font></p>
+<p><font face="宋体,sans-serif">类似<vector></vector>&nbsp;&nbsp; //双端队列，两头都支持进出<br>支持push_front()和pop_front()&nbsp; <br><stack></stack>是<vector></vector>的精简版:)&nbsp; //栈，只支持从末尾进出<br>支持push(), pop(), top()<br><queue></queue>是<deque></deque>的精简版&nbsp;&nbsp; //单端队列，就是我们平时所说的队列，一头进，另一头出<br>支持push(), pop(), front(), back()</font></p>
+<p><font face="宋体,sans-serif">
+<list></list>
+3&nbsp; <strong>list </strong><br>内部实现: 双向链表&nbsp; //作用和vector差不多，但内部是用链表实现<br>支持操作:<br>begin(), end(), size(), clear(), empty()<br>push_back(), pop_back()&nbsp; //从末尾插入或删除元素 <br>push_front(), pop_front() <br>insert() O(1)&nbsp; //链表实现，所以插入和删除的复杂度的O(1)<br>erase()&nbsp; O(1)<br>sort()&nbsp;&nbsp; O(nlogn)<br>//不支持[ ]操作！</font></p>
+<p><font face="宋体,sans-serif"><set></set>4 <strong>set</strong> </font></p>
+<p><font face="宋体,sans-serif">内部实现: 红黑树 //Red-Black Tree，一种平衡的二叉排序树<br>//又是一个Compare函数，类似于qsort函数里的那个Compare函数，作为红黑树在内部实现的比较方式<br>insert() O(logn)<br>erase() O(logn)<br>find() O(logn) 找不到返回a.end()<br>lower_bound() O(logn) 查找第一个不小于k的元素<br>upper_bound() O(logn) 查找第一个大于k的元素<br>equal_range() O(logn) 返回pair</font></p>
+<p><font face="宋体,sans-serif"><multiset></multiset>5 multiset 允许重复元素的<set></set></font></p>
+<p><font face="宋体,sans-serif"><set></set>的用法及Compare函数示例:<br>struct SS {int x,y;};<br>struct ltstr { <br>&nbsp;bool operator() (SS a, SS b)<br>&nbsp;{return a.x &lt; b.x;}&nbsp; //注意，按C语言习惯，double型要写成这样：return a.x &lt; b.x ? 1 : 0;<br>};<br>int main() <br>{ <br>&nbsp;set st;<br>&nbsp;…<br>}</font></p>
+<p><font face="宋体,sans-serif"><map>6 <strong>map</strong> 内部实现: pair组成的红黑树&nbsp; //map中文意思：印射！！<br>//就是很多pair 组成一个红黑树<br>insert() O(logn)<br>erase()&nbsp; O(logn)<br>find()&nbsp;&nbsp; O(logn) 找不到返回a.end()<br>lower_bound() O(logn) 查找第一个不小于k的元素<br>upper_bound() O(logn) 查找第一个大于k的元素<br>equal_range() O(logn) 返回pair<br>[key]运算符 O(logn) *** //这个..太猛了，怎么说呢，数组有一个下标，如a[i],这里i是int型的。数组可以认为是从int印射到另一个类型的印射，而map是一个任意的印射，所以i可以是任何类型的！</map></font></p>
+<p><font face="宋体,sans-serif"><multimap></multimap>7<strong> multimap</strong> 允许重复元素, 没有[]运算符</font></p>
+<p><font face="宋体,sans-serif">Sample : TOJ 1378 Babelfish </font></p>
+<p><font face="宋体,sans-serif">Code: (0.4k)&nbsp; //只有0.4K的代码....<br>#include <cstdio></cstdio><br>#include <string></string><br>#include <map><br>using namespace std;</map></font></p>
+<p><font face="宋体,sans-serif">map mp;</font></p>
+<p><font face="宋体,sans-serif">int main()<br>{<br>&nbsp;char buf[100],s1[100],s2[100];<br>&nbsp;while (gets(buf)) {<br>&nbsp;&nbsp;if (strlen(buf) == 0) break;<br>&nbsp;&nbsp;sscanf(buf,"%s%s",s1,s2);<br>&nbsp;&nbsp;mp[(string)s2] = (string)s1;&nbsp;//这里的string s2，起到了类似于数组下标的作用！！<br>&nbsp;}&nbsp;<br>&nbsp;while (gets(buf)) {<br>&nbsp;&nbsp;if (mp.find((string)buf) != mp.end())<br>&nbsp;&nbsp;&nbsp;printf("%s/n",mp[(string)buf].c_str());&nbsp; //mp[(string)buf]返回值是string类型，要转化成C语言能识别的字符串数组，加上.c_str()即可<br>&nbsp;&nbsp;else printf("eh/n");<br>&nbsp;}<br>return 0;<br>}</font></p>
+<p><font face="宋体,sans-serif">
+<priority_queue></priority_queue>
+8 <strong>priority_queue<br></strong>内部实现: 堆&nbsp;&nbsp; //优先队列</font></p>
+<p><font face="宋体,sans-serif">支持操作:<br>push() O(n)<br>pop() &nbsp;O(n)<br>top()&nbsp; O(1)<br>See also: push_heap(), pop_heap() … in<br></font></p>
+<p><font face="宋体,sans-serif">用法举例:<br>#include <queue></queue><br>#include <vector></vector><br>using namespace std;</font></p>
+<p><font face="宋体,sans-serif">priority_queue <int></int>maxheap;&nbsp;//int最大堆</font></p>
+<p><font face="宋体,sans-serif">struct ltstr {&nbsp;&nbsp;&nbsp;</font></p>
+<p><font face="宋体,sans-serif">&nbsp;bool operator()(int a,int b) <br>&nbsp;{return a &gt; b;}<br>};<br>priority_queue ,ltstr&gt; minheap;&nbsp;//int最小堆</font></p>
+<p><font face="宋体,sans-serif"><hash_map></hash_map>9 <strong>hash_map</strong><br>内部实现: Hash表</font><font face="宋体,sans-serif">//内部用哈希表实现的map</font></p>
+<p><font face="宋体,sans-serif">重载HashFcn和EqualKey<br>支持操作:<br>insert();&nbsp;O(1)<br>earse();&nbsp; O(1)<br>[ ]; &nbsp;&nbsp;&nbsp;&nbsp; O(1)<br>示例：Again TOJ 1378 Babelfish <br>See also: <hash_set></hash_set><hash_multimap></hash_multimap><hash_multiset></hash_multiset></font></p>
+<p><font face="宋体,sans-serif">#include <cstdio></cstdio><br>#include <hash_map.h></hash_map.h>&nbsp;//??&nbsp;&nbsp; //因为不是C++标准，所以要加.h <br>#include <string></string><br>using namespace std;</font></p>
+<p><font face="宋体,sans-serif">struct calc_hash {<br>&nbsp;size_t operator()(string str) const {<br>&nbsp;&nbsp;unsigned long h = 0; <br>&nbsp;&nbsp;int i;<br>&nbsp;&nbsp;for (i = 0 ; i &lt; str.size() ; i++) {<br>&nbsp;&nbsp;&nbsp;h &lt;&lt;= 5;　　　　　　　　　　　//这个就是哈希函数，从字符串到int的印射函数，可以去网上找<br>&nbsp;&nbsp;&nbsp;h |= str[i] - 'a';<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;return (size_t)h;&nbsp;//h%M??&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //h是否需要一个上限？据说系统会自动处理，不必人工添加<br>&nbsp;}<br>};</font></p>
+<p><font face="宋体,sans-serif">struct eqstr {<br>&nbsp; &nbsp;bool operator()(string s1, string s2) <br>&nbsp;{return s1 == s2;}<br>};&nbsp;</font></p>
+<p><font face="宋体,sans-serif">int main() {<br>&nbsp;hash_map hp;<br>&nbsp;char buf[100],s1[20],s2[20];<br>&nbsp;while (gets(buf)) {<br>&nbsp;&nbsp;if (strlen(buf) == 0) break;<br>&nbsp;&nbsp;sscanf(buf,"%s%s",s1,s2);<br>&nbsp;&nbsp;hp[s2] = s1;&nbsp;<br>&nbsp;}&nbsp;<br>&nbsp;while (gets(buf)) {<br>&nbsp;&nbsp;if (hp.find((string)buf) != hp.end())<br>&nbsp;&nbsp;&nbsp;printf("%s/n",hp[(string)buf].c_str());<br>&nbsp;&nbsp;else printf("eh/n");<br>&nbsp;}<br>&nbsp;return 0;&nbsp;<br>}</font></p>
+<p><font face="宋体,sans-serif"></font></p>
+<p><font face="宋体,sans-serif"><algorithm></algorithm>//更神奇的东西！<br>1.sort()<br>void sort(RandomAccessIterator first, RandomAccessIterator last); <br>void sort(RandomAccessIterator first, RandomAccessIterator last, StrictWeakOrdering comp); <br>区间[first,last)<br><strong>Quicksort</strong>,复杂度<strong>O(nlogn)</strong> <br>(n=last-first,平均情况和最坏情况)</font></p>
+<p><font face="宋体,sans-serif">用法举例:<br>1.从小到大排序(int, double, char, string, etc)<br>const int N = 5;<br>int main()<br>{<br>&nbsp;int a[N] = {4,3,2,6,1};<br>&nbsp;string str[N] = {“TJU”,”ACM”,”ICPC”,”abc”,”kkkkk”};<br>&nbsp;sort(a,a+N);<br>&nbsp;sort(str,str+N);<br>&nbsp;return 0;<br>}<br>2.从大到小排序（需要自己写comp函数)<br>const int N = 5;<br>int cmp(int a,int b) {return a &gt; b;}<br>int main()<br>{<br>&nbsp;int a[N] = {4,3,2,6,1};<br>&nbsp;sort(a,a+N,cmp);<br>&nbsp;return 0;<br>}<br>3. 对结构体排序<br>struct SS {int first,second;}; <br>int cmp(SS a,SS b) {<br>&nbsp;if (a.first != b.first) return a.first &lt; b.first;<br>&nbsp;return a.second &lt; b.second;<br>}</font></p>
+<p><font face="宋体,sans-serif">v.s. qsort() in C (平均情况O(nlogn)，最坏情况O(n^2))&nbsp;&nbsp;&nbsp; //qsort中的cmp函数写起来就麻烦多了！<br>int cmp(const void *a,const void *b) {<br>&nbsp;if (((SS*)a)-&gt;first != ((SS*)b)-&gt;first)<br>&nbsp;&nbsp;return ((SS*)a)-&gt;first – ((SS*)b)-&gt;first;<br>&nbsp;return ((SS*)a)-&gt;second – ((SS*)b)-&gt;second;<br>}<br>qsort(array,n,sizeof(array[0]),cmp);</font></p>
+<p><font face="宋体,sans-serif">sort()系列:<br><strong>stable_sort</strong>(first,last,cmp);&nbsp;//稳定排序<br><strong>partial_sort</strong>(first,middle,last,cmp);//部分排序<br>将前(middle-first)个元素放在[first,middle)中，其余元素位置不定<br>e.g.<br>int A[12] = {7, 2, 6, 11, 9, 3, 12, 10, 8, 4, 1, 5}; <br>partial_sort(A, A + 5, A + 12); <br>// 结果是 "1 2 3 4 5 11 12 10 9 8 7 6". <br>Detail: <strong>Heapsort</strong> ,<br><strong>O((last-first)*log(middle-first))</strong></font></p>
+<p><font face="宋体,sans-serif">sort()系列:<br>partial_sort_copy(first, last, result_first, result_last, cmp);<br>//输入到另一个容器，不破坏原有序列<br>bool is_sorted(first, last, cmp);<br>//判断是否已经有序<br><strong>nth_element</strong>(first, nth, last, cmp);<br>//使[first,nth)的元素不大于[nth,last), O(N)<br>e.g. input: 7, 2, 6, 11, 9, 3, 12, 10, 8, 4, 1, 5 <br>nth_element(A,A+6,A+12);<br>Output: 5 2 6 1 4 3 7 8 9 10 11 12 </font></p>
+<p><font face="宋体,sans-serif"><algorithm></algorithm><br>2. binary_search()<br>bool binary_search(ForwardIterator first, ForwardIterator last, const LessThanComparable&amp; value); <br>bool binary_search(ForwardIterator first, ForwardIterator last, const T&amp; value, StrictWeakOrdering comp); <br>在[first,last)中查找value，如果找到返回Ture,否则返回False<br>二分检索，复杂度<strong>O(log(last-first))</strong><br>v.s. bsearch() in C</font></p>
+<p><font face="宋体,sans-serif">Binary_search()系列<br>itr upper_bound(first, last, value, cmp);<br>//itr指向大于value的第一个值(或容器末尾)<br>itr lower_bound(first, last, value, cmp);<br>//itr指向不小于valude的第一个值(或容器末尾)<br>pair equal_range(first, last, value, cmp);<br>//找出等于value的值的范围 O(2*log(last – first))<br>int A[N] = {1,2,3,3,3,5,8}<br>*upper_bound(A,A+N,3) == 5<br>*lower_bound(A,A+N,3) == 3 </font></p>
+<p><font face="宋体,sans-serif"><algorithm></algorithm><br>make_heap(first,last,cmp)&nbsp;O(n)<br>push_heap(first,last,cmp)&nbsp;&nbsp;O(logn)<br>pop_heap(first,last,cmp)&nbsp;&nbsp;O(logn)<br>is_heap(first,last,cmp)&nbsp;&nbsp;O(n)<br>e.g:<br>vector <int></int>vi;<br>while (scanf(“%d”,&amp;n) != EOF) {<br>&nbsp;vi.push_back(n);<br>&nbsp;push_heap(vi.begin(),vi.end());<br>}</font></p>
+<p><font face="宋体,sans-serif"><algorithm></algorithm><br>Others interesting:<br>next_permutation(first, last, cmp)<br>prev_permutation(first, last, cmp) <br>//both O(N)<br>min(a,b);<br>max(a,b);<br>min_element(first, last, cmp);<br>max_element(first, last, cmp);</font></p>
+<p><font face="宋体,sans-serif"><algorithm></algorithm><br>Others interesting:<br>fill(first, last, value)<br>reverse(first, last)<br>rotate(first,middle,last);<br>itr unique(first, last);<br>//返回指针指向合并后的末尾处<br>random_shuffle(first, last, rand)</font></p>
+<p><font face="宋体,sans-serif">Some Others:<br>More container: Rope, Slist, Bitset …<br>More about iterator<br>Memory allocation<br>Function object</font></p>
+&nbsp;
+<p>&nbsp;</p>
+<algorithm></algorithm>
+</div>
+<div class="share_buttons" id="sharePanel"><span>分享到：</span> <a name="sina" class="share_sina" title="分享到新浪微博"></a><a name="qq" class="share_qq" title="分享到腾讯微博"></a></div>
+<!--192.168.1.237 2012-7-21 19:24:19-->
+<div class="article_next_prev">
+        <li class="prev_article">
+            <span>上一篇：</span><a href="http://blog.csdn.net/jenus1/article/details/2164041">c++中引用（reference）用法剪辑</a></li>
+        <li class="next_article">
+            <span>下一篇：</span><a href="http://blog.csdn.net/jenus1/article/details/2591736">编译库冲突的问题发现</a></li>
+</div>
+
+
+</div>
+<div id="ad_cen"><iframe id="ad_frm_0" frameborder="0" scrolling="no" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; overflow-x: hidden; overflow-y: hidden; width: 732px; height: 92px; " src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ad(1).htm"></iframe></div>
+<script type="text/javascript">
+    new Ad(4, 'ad_cen');
+</script>
+<div id="comment_title" class="panel_head">查看评论<a name="comments"></a></div>
+<div id="comment_list"><br>&nbsp;&nbsp;暂无评论<br><br><div class="clear"></div></div>
+<div id="comment_bar"></div>
+<div id="comment_form"><div class="guest_link">您还没有登录,请<a href="http://passport.csdn.net/account/login?from=http%3A%2F%2Fblog.csdn.net%2Fjenus1%2Farticle%2Fdetails%2F2227691">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fjenus1%2Farticle%2Fdetails%2F2227691">[注册]</a></div></div>
+<div class="announce">* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+<script type="text/javascript">
+    var fileName = '2227691';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/comment.js"></script>
+<div id="ad_bot"><iframe id="ad_frm_1" frameborder="0" scrolling="no" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; overflow-x: hidden; overflow-y: hidden; width: 732px; height: 170px; " src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ad(2).htm"></iframe></div>
+<script type="text/javascript">
+    new Ad(5, 'ad_bot');
+</script>
+<div id="report_dialog"></div>
+
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+    <ul class="panel_head"><span>个人资料</span></ul>
+    <ul class="panel_body profile">
+        <div id="blog_userface">
+            <a href="http://my.csdn.net/jenus1" target="_blank">
+            <img src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/1_jenus1.jpg" title="访问我的空间" style="max-width:90%">
+            </a>
+            <br>
+            <span><a href="http://my.csdn.net/jenus1" target="_blank">jenus1</a></span>
+        </div>
+<div class="interact">
+<!--<a href="#" class="attented" title="已关注"></a>-->
+<a href="http://blog.csdn.net/jenus1/article/details/2227691#" class="attent" id="span_add_follow" title="[加关注]"></a>
+<a href="http://my.csdn.net/my/letter/send/jenus1" class="letter" title="[发私信]"></a>
+</div>
+        <div id="blog_medal">
+        <div id="bms_box"></div></div>
+        <ul id="blog_rank">
+            <li>访问：<span>7112次</span></li>
+            <li>积分：<span>256分</span></li>
+            <li>排名：<span>千里之外</span></li>
+        </ul>
+        <ul id="blog_statistics">
+            <li>原创：<span>17篇</span></li>
+            <li>转载：<span>5篇</span></li>
+            <li>译文：<span>0篇</span></li>
+            <li>评论：<span>2条</span></li>
+        </ul>
+    </ul>
+</div>
+<script type="text/javascript">
+    var _blogger = 'jenus1';
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var un = getUN().toLowerCase();
+        if (un == _blogger.toLowerCase()) {
+            $('.interact').hide();
+        } else if(un) {
+            var url = "http://my.csdn.net/index.php/follow/check_is_followed/" + encodeURIComponent(un) + "/" + encodeURIComponent(_blogger) + "?jsonpcallback=?";
+            $.getJSON(url, {}, function (data) {
+                if (data.succ == 1 && data.info == 1) {
+                    $('#span_add_follow').attr('class', 'attented');
+                } else {
+                    $('#span_add_follow').click(guanzhu);
+                }
+            }, 'json');
+        }
+    });
+function guanzhu() {
+    var url = "http://my.csdn.net/index.php/follow/do_follow?jsonpcallback=?";
+    $.getJSON(url, { "username": _blogger }, function (data) {
+        if (data.succ == 1) {
+            alert('关注成功！');
+            $('#span_add_follow').attr('class', 'attented').click(function () { return false; });
+        } else {
+            alert(data.msg);
+        }
+    });
+    return false;
+}
+function getUN() {
+    var m = document.cookie.match(new RegExp("(^| )UserName=([^;]*)(;|$)"));
+    if (m) return m[2];
+    else return '';
+}
+</script>
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="submit" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div><div id="panel_Category" class="panel">
+    <ul class="panel_head"><span>文章分类</span></ul>
+    <ul class="panel_body">
+        <li>
+        <a href="http://blog.csdn.net/jenus1/article/category/504863">c++深入</a><span>(4)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/jenus1/article/category/503841">生活</a><span>(1)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/jenus1/article/category/497851">管理类别</a><span>(2)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/jenus1/article/category/504424">行为探索</a><span>(1)</span>
+        </li>
+    </ul>
+</div><div id="panel_Archive" class="panel">
+    <ul class="panel_head"><span>文章存档</span></ul>
+    <ul class="panel_body">
+        <div id="archive_list"><li><a href="http://blog.csdn.net/jenus1/article/month/2009/09">2009年09月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/jenus1/article/month/2009/01">2009年01月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/jenus1/article/month/2008/12">2008年12月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/jenus1/article/month/2008/07">2008年07月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/jenus1/article/month/2008/06">2008年06月</a><span>(1)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/jenus1/article/month/2008/03">2008年03月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/jenus1/article/month/2008/02">2008年02月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/jenus1/article/month/2008/01">2008年01月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/jenus1/article/month/2007/08">2007年08月</a><span>(1)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+    </ul>
+</div>
+<div id="hotarticls" class="panel">
+    <ul class="panel_head"><span>阅读排行</span></ul>
+    <ul class="panel_body itemlist">
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3719485" title="也谈C++里覆盖（override），重载（overload），隐藏（hide）">也谈C++里覆盖（override），重载（overload），隐藏（hide）</a><span>(933)</span>
+        </li>
+        <li>
+            <a href="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET.htm" title="C++ STL标准容器插入删除算法的复杂度（来源flyhorse）">C++ STL标准容器插入删除算法的复杂度（来源flyhorse）</a><span>(904)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3719267" title="vc相关编译器提示的警告：These project configuration(s) are out of date内涵">vc相关编译器提示的警告：These project configuration(s) are out of date内涵</a><span>(598)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/2610853" title="winxp+vs2003+qt-win-opensource-src-4.4.0配置">winxp+vs2003+qt-win-opensource-src-4.4.0配置</a><span>(596)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/2128890" title="多国语言版本的编码要点">多国语言版本的编码要点</a><span>(477)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/1738235" title="TCP/UDP 发送数据的数据长度单位">TCP/UDP 发送数据的数据长度单位</a><span>(458)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/2164041" title="c++中引用（reference）用法剪辑">c++中引用（reference）用法剪辑</a><span>(446)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/2682795" title="基本概念都知道吗？ TAG：lib dll 静态加载 动态加载">基本概念都知道吗？ TAG：lib dll 静态加载 动态加载</a><span>(271)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/2163956" title="C++ const用法汇集（摘）">C++ const用法汇集（摘）</a><span>(191)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/2122155" title="进程间通讯与线程间通讯">进程间通讯与线程间通讯</a><span>(188)</span>
+        </li>
+    </ul>
+</div>
+<div id="hotarticls2" class="panel">
+    <ul class="panel_head"><span>评论排行</span></ul>
+    <ul class="panel_body itemlist">
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/2682795" title="基本概念都知道吗？ TAG：lib dll 静态加载 动态加载">基本概念都知道吗？ TAG：lib dll 静态加载 动态加载</a><span>(1)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3719267" title="vc相关编译器提示的警告：These project configuration(s) are out of date内涵">vc相关编译器提示的警告：These project configuration(s) are out of date内涵</a><span>(1)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3837573" title="怎么样积累人脉?">怎么样积累人脉?</a><span>(0)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3836449" title="MFC 的模块状态">MFC 的模块状态</a><span>(0)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3719485" title="也谈C++里覆盖（override），重载（overload），隐藏（hide）">也谈C++里覆盖（override），重载（overload），隐藏（hide）</a><span>(0)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3850561" title=".net应用程序发布解疑">.net应用程序发布解疑</a><span>(0)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3703735" title="群体效应，你认为呢？">群体效应，你认为呢？</a><span>(0)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3671918" title="08年杂想总结">08年杂想总结</a><span>(0)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3634685" title="内建---自信力">内建---自信力</a><span>(0)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/jenus1/article/details/3551060" title="难得的闲暇，思考管理真空">难得的闲暇，思考管理真空</a><span>(0)</span>
+        </li>
+    </ul>
+</div>
+<div id="homepageArticles" class="panel">
+    <ul class="panel_head"><span>推荐文章</span></ul>
+    <ul class="panel_body" id="ad_commend">
+    <iframe id="ad_frm_2" frameborder="0" scrolling="no" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; overflow-x: hidden; overflow-y: hidden; width: 182px; height: 278px; " src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ad.htm"></iframe></ul>
+</div>
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ad.js"></script>
+<script type="text/javascript">
+    new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+    <a href="http://blog.csdn.net/jenus1/article/details/2682795#comments">基本概念都知道吗？ TAG：lib dll 静态加载 动态加载</a>
+    <p style="margin:0px;">jingxuewang110:
+
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/jenus1/article/details/3719267#comments">vc相关编译器提示的警告：These project configuration(s) are out of date内涵</a>
+    <p style="margin:0px;">antoniozhou:
+问题描述：每次按F5开始调试时，都会弹出“这些项目配置已经过时”，是否重新生成的对话框，即使是你刚刚...
+    </p>
+    </li>
+</ul>
+</div>
+<div id="custom_column_980573" class="panel">
+    <ul class="panel_head"><span> 同行人脉</span></ul>
+    <ul class="panel_body">
+        <ul><li><a href="http://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=117" target="_blank">MFC基础，共同深刻</a></li><li><a href="http://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=4747258" target="_blank">skin，客户端的生命线</a></li></ul>
+    </ul>
+</div><div id="custom_column_980574" class="panel">
+    <ul class="panel_head"><span>程序编译问题</span></ul>
+    <ul class="panel_body">
+        <ul><li><a href="http://www.cnblogs.com/Jedimaster/archive/2007/03/02/662065.html" target="_blank">libcmt.lib MSVCRT.lib 定义重复冲突</a></li></ul>
+    </ul>
+</div><div id="custom_column_980575" class="panel">
+    <ul class="panel_head"><span>会见财经界</span></ul>
+    <ul class="panel_body">
+        <ul><li><a href="http://blog.csdn.net/jenus1/article/details/www.icxo.com" target="_blank">I am a CxO someday, haha!</a></li></ul>
+    </ul>
+</div><div id="custom_column_980576" class="panel">
+    <ul class="panel_head"><span>知名人士blog</span></ul>
+    <ul class="panel_body">
+        <ul><li><a href="http://hi.baidu.com/liyanhong/blog" target="_blank">http://hi.baidu.com/liyanhong/blog--李彦宏</a></li></ul>
+    </ul>
+</div>    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+</div>
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/shCore-src.js"></script>
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ZeroClipboard.js"></script>
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/article_code.js"></script>
+
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/show.js"></script>
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/publib_footer.js"></script><link rel="stylesheet" type="text/css" href="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/pub_footer_2012.css"><div class="pub_footerall"><dl><dt></dt> <dd><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a>|<a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a>|<a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a>|<a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a>|<a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a>|<a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a>|<a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a>|<a href="mailto:webmaster@csdn.net">问题报告</a></dd><dd>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</dd><dd>北京创新乐知信息技术有限公司 版权所有</dd><dd><img src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/ico_email.gif" alt="" title=""> 联系邮箱：webmaster@csdn.net</dd><dd>Copyright © 1999-2012, CSDN.NET, All Rights Reserved&nbsp;<a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div>
+
+<script type="text/javascript" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="./C++ STL标准容器插入删除算法的复杂度（来源flyhorse） - jenus1的专栏 - 博客频道 - CSDN.NET_files/msg.popup.js"></script>
+
+
+</div>
+
+</body></html>

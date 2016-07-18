@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+int t,m,n,a,b,f[101][101];
+int main()
+{
+	scanf("%d",&t);
+	while(t--)
+	{
+		scanf("%d%d",&n,&m);
+		memset(f,0,sizeof(f));
+		while(m--)
+		{
+			scanf("%d%d",&a,&b);
+			f[a][b]=1;
+		}
+		int i,j,k;
+		for(k=1;k<=n;k++)
+		{
+			for(i=1;i<=n;i++)
+			{
+				for(j=1;j<=n;j++)
+				{
+					f[i][j]=f[i][j]||f[i][k]&&f[k][j];
+				}
+			}
+		}
+		int cnt=0,res1,res2;
+		
+		for(i=1;i<=n;i++)
+		{
+			res1=res2=0;
+			for(j=1;j<=n;j++)
+			{
+				if(f[i][j])
+					res1++;
+				if(f[j][i])
+					res2++;
+			}
+			if(res1>n/2||res2>n/2)
+				cnt++;
+		}
+		printf("%d\n",cnt);
+			
+		
+	}
+	//system("pause");
+	return 0;
+	
+
+}

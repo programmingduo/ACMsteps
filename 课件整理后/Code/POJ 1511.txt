@@ -1,0 +1,83 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<queue>
+using namespace std;
+int P,Q;
+struct edge
+{
+	int v,next;
+	long long w;
+}e[2000010];
+int cas;
+int box[2000010];
+long long d[2000010];
+bool ok[2000010];
+queue<int>q;
+int spfa(int s)
+{
+	int now;
+	d[s]=0;
+	q.push(s);
+	ok[s]=1;
+	int i;
+	while(!q.empty())
+	{
+		now=q.front();
+		q.pop();
+		ok[now]=0;
+		for(i=box[now];i!=-1;i=e[i].next)
+		{
+			if(d[now]+e[i].w<d[e[i].v])
+			{
+				d[e[i].v]=d[now]+e[i].w;
+				if(ok[e[i].v]==0)
+				{
+					q.push(e[i].v);
+					ok[e[i].v]=1;
+				}
+			}
+		}
+	}
+	return 0;
+}
+int main()
+{
+	scanf("%d",&cas);
+	int s,t,w;
+	while(cas--)
+	{
+		int i;
+		scanf("%d%d",&P,&Q);
+		for(i=1;i<=2*P;i++)
+		{
+			d[i]=10000000000;
+		}
+		memset(box,-1,sizeof(box));
+		memset(ok,0,sizeof(ok));
+		int num=0;
+		while(Q--)
+		{
+			scanf("%d%d%d",&s,&t,&w);
+			e[num].next=box[s];
+			box[s]=num;
+			e[num].v=t;
+			e[num++].w=w;
+			e[num].next=box[P+t];
+			box[P+t]=num;
+			e[num].v=P+s;
+			e[num++].w=w;
+		}
+		spfa(1);
+		spfa(P+1);
+		long long res=0;
+		for(i=1;i<=2*P;i++)
+		{
+			res+=d[i];
+		}
+		printf("%I64d\n",res);
+
+	}
+	system("pause");
+	return 0;
+}

@@ -1,0 +1,147 @@
+变形很多，最小割最大流定理的理解是关键
+POJ 1149 - PIGS(较难)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=1149
+绝对经典的构图题
+POJ 1273 - Drainage Ditches(基础)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=1273
+最大流入门
+POJ 1459 - Power Network(基础)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=1459
+基本构图
+POJ 1637 - Sightseeing tour(Crazy)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=1637
+题意：求混合图的欧拉迹是否存在
+解法：无向边任意定向，构图，详建黑书P324
+POJ 1815 - Friendship(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=1815
+题意：求最小点割
+解法：拆点转换为边割
+相关：http://hi.baidu.com/zfy0701/blog/item/a521f230b06dea9fa9018e0e.html
+POJ 1966 - Cable TV Network(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=1966
+题意：去掉多少点让图不连通
+解法：任定一源点，枚举汇点求点割集(转换到求边割)，求其中最小的点割
+POJ 2112 - Optimal Milking(基础)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2112
+二分枚举，最大流
+POJ 2391 - Ombrophobic Bovines(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2391
+题意：floyd, 拆点，二分枚举
+相关：http://hi.baidu.com/zfy0701/blog/item/3e0006c4f73f0eaf8226acff.html
+POJ 2396 - Budget(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2396
+题意：有源汇的上下界可行流
+解法：用矩阵-网络流模型构图，然后拆边
+相关：http://hi.baidu.com/zfy0701/blog/item/6449d82a64e15e3e5343c1ba.html
+最小割模型在竞赛中的应用
+POJ 2455 - Secret Milking Machine(基础)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2455
+二分枚举，一般来说需要写对边容量的更新操作而不是每次全部重新构图
+POJ 2699 - The Maximum Number of Strong Kings(较难)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2699
+解法：枚举人数 + 最大流(感谢xpcnq_71大牛的建图的提示)
+POJ 2987 - Firing(较难)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2987
+题意：最大权闭包
+解法：先边权放大，第一问总量-最大流，第二问求最小割
+相关：http://wywcgs.spaces.live.com/blog/cns!4D861A02A3382142!1109.entry?&_c02_owner=1
+Profit(中等)
+
+http://www.vijos.cn/Problem_Show.asp?id=1352
+最大权闭包图的特殊情况
+ZOJ 2071 - Technology Trader 也是此类型，懒了没做
+
+http://acm.zju.edu.cn/show_problem.php?pid=2071
+POJ 3084 - Panic Room(中等，好题)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3084
+题意：略
+解法：根据最小割建模
+POJ 3155 - Hard Life(很挑战一题)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3155
+题意：最大密度子图
+解法：参数搜索 + 最大权闭合图，A.V.Goldberg的论文(nb解法)
+最小割模型在信息学竞赛中的应用 一文中也有讲
+POJ 3189 - Steady Cow Assignment(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3189
+题意：寻找最小的区间完成匹配
+解法：这题充分说明SAP的强大，纯暴力可过。更好的方法是在枚举区间的过程中不断删边和加边继续网络流过程
+POJ 3204 - Ikki's Story I - Road Reconstruction(基础)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3204
+ZOJ 2532 - Internship(基础)
+
+http://acm.zju.edu.cn/show_problem.php?pid=2532
+题意：确定边是否是某个割中的边
+解法：两边dfs求割, 或暴力枚举(需要写取消某条增广路的操作(但数据弱，也许不取消也能混过))
+POJ 3308 - Paratroopers(较难)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3308
+POJ 2125 - Destroying The Graph(难)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2125
+题意：最小点权覆盖
+POJ 3469 - Dual Core CPU(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3469
+题意：最小割
+POJ 3498 - March of the Penguins(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3498
+题意：满足点容量限制的网络流
+解法：拆点把点容量转换为边容量，枚举汇点
+ZOJ 2587 - Unique Attack(较难)
+
+http://acm.zju.edu.cn/show_problem.php?pid=2587
+题意：确定最小割是否是唯一的
+解法：得理解dfs求最小割算法的本质
+SPOJ 839 - Optimal Marks(难)
+
+http://www.spoj.pl/problems/OPTM/
+题意：略
+解法：很经典哦，见amber的集训队论文，根据标号的每一位求最小割
+SGU 326 - Perspective(中等)
+
+http://acm.sgu.ru/problem.php?c0&problem=326
+比较经典的构图法
+费用流问题
+可以KM解的就不放在这里，另外，感觉除非很特殊的图，一般用连续增广路的算法就够了
+POJ 2175 - Evacuation Plan(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=2175
+题意：判断是否给定解是最优解，比较阴的一题
+解法：根据给出的计划构造流，然后消且只消一次负圈
+POJ 3422 - Kaka's Matrix Travels(中等)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3422
+题意：略
+解法：拆点
+POJ 3680 - Intervals(较难)
+
+http://acm.pku.edu.cn/JudgeOnline/problem?id=3680
+题意：略，这题还是蛮经典
+解法：discuss中比较详细
+SPOJ 371 - Boxes(简单)
+
+http://www.spoj.pl/problems/BOXES/
+题意：略
+解法：费用流，但似乎有比网络流更好的做法
+SGU 185 - Two shortest(中等)
+
+http://acm.sgu.ru/problem.php?c0&problem=185
+题意：求两条不想交的最短路径
+解法：费用流，也可以最短路 + 最大流。
