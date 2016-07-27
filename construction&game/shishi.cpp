@@ -8,7 +8,6 @@ void p(int x, int y)
 int main ()
 {
     p(1, 2);
-//    p[1][2];
+    p[1][2];
     return 0;
 }
-
