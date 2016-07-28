@@ -6,7 +6,7 @@ long long a[20], b[20], vis[20];
 int get1(int i)
 {
     int total = 0;
-    int x = 0;
+    int x = 1;
     while(i)
     {
         if(i&1)
@@ -14,14 +14,13 @@ int get1(int i)
             vis[total ++] = x;
         }
         x++;
-        i >>= 1;
     }
     return total;
 }
 
 long long GCD(long long x, long long y)
 {
-    return y==0? x: GCD(y, x % y);
+    return y==0? x: GCD(y, x);
 }
 
 long long max(long long x, long long y)
@@ -43,17 +42,12 @@ long long cal(int total)
 {
     long long lca = 7;
     long long tl = l, tr = r;
-    if(total)
-    {
-        tl = l - b[0];
-        tr = r - b[0];
-    }
     for(int i = 0; i < total; i ++)
     {
-        int temp = vis[i];
-        tl = max(tl, l - b[temp]);
-        tr = max(tr, r - b[temp]);
-        lca = LCA(lca, a[temp]);
+        long long temp = vis[i];
+        tl = max(l, l + b[i]);
+        tr = min(r, r - b[i]);
+        lca = LCA(lca, a[i]);
     }
     return (tr - tl) / lca;
 }
@@ -79,10 +73,9 @@ int main ()
             }
             else
                 ans+= cal(total);
-//            printf("%lld\n", ans);
         }
 
-        printf("Case #%d: %I64d\n", t, ans);
+        printf("Case #%d: %I64d", t, ans);
 
     }
 }
