@@ -1,0 +1,113 @@
+#include <iostream>  
+#include <math.h>  
+#include <queue>  
+#include <cstdio>
+#include <string.h>
+#include<cmath>
+using namespace std;  
+#define MAXV 210  
+const int INF = 0x3fffffff;  
+  
+typedef struct{  
+    int x,y;  
+}Point;  
+
+int abss(int a)
+{
+if(a < 0)
+return -a;
+return a;
+}
+  
+Point man[MAXV],home[MAXV];  
+int man_sum,home_sum,mincost;  
+int cost[MAXV][MAXV],res[MAXV][MAXV],source,sink;  
+int d[MAXV],parent[MAXV];  
+  
+void spfa(){  
+    queue <int>q;  
+    int v,i;  
+    bool vis[MAXV];  
+    memset(vis,false,sizeof(vis));  
+    memset(parent,-1,sizeof(parent));  
+    for(i=source;i<=sink;i++) d[i]=INF;  
+  
+    q.push(source);  
+    d[source]=0;  
+    vis[source]=true;  
+  
+    while(!q.empty()){  
+        v=q.front();q.pop();  
+        vis[v]=false;  
+  
+        for(i=source;i<=sink;i++){  
+            if(res[v][i] && d[v]+cost[v][i]<d[i]){  
+                d[i]=d[v]+cost[v][i];  
+                parent[i]=v;  
+                if(!vis[i]){  
+                    q.push(i);  
+                    vis[i]=true;  
+                }  
+            }  
+        }  
+    }  
+}  
+  
+void MCMF(){  
+    int v;  
+    mincost=0;  
+    while(1){  
+        spfa();  
+        if(parent[sink]==-1) break;  
+  
+        v=sink;  
+        while(parent[v]!=-1){  
+            res[parent[v]][v]-=1;  
+            res[v][parent[v]]+=1;  
+            v=parent[v];  
+        }  
+        mincost+=d[sink];  
+    }  
+}  
+  
+int main(){  
+    int n,m,i,j;  
+    char s[MAXV];  
+    while(~scanf("%d%d",&n,&m) && n || m){  
+        getchar();  
+        man_sum=home_sum=0;  
+        for(i=1;i<=n;i++){       //记录下人与房子的坐标  
+            gets(s);  
+            for(j=0;j<m;j++){  
+                if(s[j]=='m'){  
+                    man[man_sum].x=i;  
+                    man[man_sum++].y=j+1;  
+                }  
+                if(s[j]=='H'){  
+                    home[home_sum].x=i;  
+                    home[home_sum++].y=j+1;  
+                }  
+            }  
+        }  
+  
+        memset(cost,0,sizeof(cost));  
+        memset(res,0,sizeof(res));  
+        source=0;sink=home_sum+man_sum+1;  
+  
+        for(i=0;i<man_sum;i++) res[source][i+1]=1;       //源点指向人  
+  
+        for(i=0;i<man_sum;i++){                          //人指向房子  
+            for(j=0;j<home_sum;j++){  
+                res[i+1][man_sum+j+1]=1;  
+                cost[i+1][man_sum+j+1]=abss(man[i].x-home[j].x)+abss(man[i].y-home[j].y);  
+                cost[man_sum+j+1][i+1]=-cost[i+1][man_sum+j+1];  
+            }  
+        }  
+  
+        for(i=0;i<home_sum;i++) res[man_sum+i+1][sink]=1;        //房子指向汇点  
+  
+        MCMF();  
+        printf("%d\n",mincost);  
+    }  
+    return 0;  
+}  
