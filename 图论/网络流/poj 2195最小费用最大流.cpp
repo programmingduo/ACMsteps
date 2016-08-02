@@ -10,6 +10,7 @@ const int INF = 0x3fffffff;
 bool inq[maxNode];
 char org[105][105];
 int  pre[maxNode], res[maxNode][maxNode], cost[maxNode][maxNode], d[maxNode];
+
 struct node
 {
     int x, y;
@@ -24,7 +25,7 @@ bool SPFA(int s, int t)
     q.push(s);
     for(int i = s; i <= t; i ++)
         d[i] = INF;
-    d[0] = 0;
+    d[s] = 0;
 
     while(!q.empty())
     {
@@ -58,15 +59,16 @@ int MCMF(int s, int t)
     while(SPFA(s, t))
     {
 //        printf("%d %d\n", s, t);
-        int v = pre[t];
+        int v = t;
         while(v != -1)
         {
-            printf("%d ", v);
+//            printf("%d ", v);
             res[pre[v]][v] -= 1;
             res[v][pre[v]] += 1;
             v = pre[v];
+
         }
-        printf("%d\n", d[t]);
+//        printf("%d\n", d[t]);
         mincost += d[t];
     }
     return mincost;
@@ -75,7 +77,7 @@ int MCMF(int s, int t)
 int main ()
 {
     int r, c;
-    while(~scanf("%d %d", &r, &c))
+    while(~scanf("%d %d", &r, &c) && r && c)
     {
         for(int i = 1; i <= r; i ++)
         {
@@ -101,7 +103,7 @@ int main ()
                 }
             }
         }
-        printf("house man: %d %d\n", house, man);
+//        printf("house man: %d %d\n", house, man);
         memset(res, 0, sizeof(res));
         memset(cost, 0, sizeof(cost));
         int s = 0, t = house + man + 1;
@@ -122,23 +124,23 @@ int main ()
         for(int i = house + 1; i < t; i ++)
             res[i][t] = 1;
 
-        for(int i = s; i <= t; i ++)
-        {
-            for(int j = s; j <= t; j ++)
-            {
-                printf("%d ", res[i][j]);
-            }
-            printf("\n");
-        }
-
-        for(int i = s; i <= t; i ++)
-        {
-            for(int j = s; j <= t; j ++)
-            {
-                printf("%d ", cost[i][j]);
-            }
-            printf("\n");
-        }
+//        for(int i = s; i <= t; i ++)
+//        {
+//            for(int j = s; j <= t; j ++)
+//            {
+//                printf("%d ", res[i][j]);
+//            }
+//            printf("\n");
+//        }
+//
+//        for(int i = s; i <= t; i ++)
+//        {
+//            for(int j = s; j <= t; j ++)
+//            {
+//                printf("%d ", cost[i][j]);
+//            }
+//            printf("\n");
+//        }
 
         printf("%d\n", MCMF(s, t));
     }
