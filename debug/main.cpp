@@ -1,158 +1,89 @@
 #include<cstdio>
 #include<string.h>
-#include<queue>
 
-using namespace std;
+#define maxn 200010
+int wa[maxn], wb[maxn], wsf[maxn], wv[maxn], sa[maxn];
+int rank[maxn], height[maxn], s[maxn];
+char str[maxn], str1[maxn];
 
-const int VM = 100010;
-const int EM = 400010;
-const int inf = 0x3f3f3f3f;
-struct E
+int cmp(int *r, int a, int b, int k)
 {
-    int to, from, next, cap;
-}edge[EM];
-
-int head[VM], cur[VM], dep[VM], gap[VM];
-int stack_array[EM];
-int e;
-
-void addEdge(int u, int v, int c)
-{
-    edge[e].from = u;
-    edge[e].to = v;
-    edge[e].cap = c;
-    edge[e].next = head[u];
-    head[u] = e ++;
-
-    edge[e].from = v;
-    edge[e].to = u;
-    edge[e].cap = 0;
-    edge[e].next = head[v];
-    head[v] = e ++;
+    return r[a] == r[b] && r[a+k] == r[b+k];
 }
 
-void sap_init()
+void getsa(int *r, int *sa, int n, int m)
 {
-    e = 0;
-    memset(head, -1, sizeof(head));
-    memset(dep, -1, sizeof(dep));
-    memset(gap, 0, sizeof(gap));
-}
+    int *x = wa, *y = wb, *t, i, j, p;
+    for(i = 0; i < m; i ++) wsf[i] = 0;
+    for(i = 0; i < n; i ++) wsf[x[i] = r[i]] ++;
+    for(i = 1; i < m; i ++) wsf[i] += wsf[i - 1];
+    for(i = n - 1; i >= 0; i --) sa[--wsf[x[i]]] = i;
 
-void get_dep(int t)
-{
-    gap[0] = 1;
-    dep[t] = 0;
-    queue<int > q;
-    q.push(t);
-    while(!q.empty())
+    p = 1;
+    j = 1;
+    for(; p < n; j *= 2, m = p)
     {
-        int u = q.front();
-        q.pop();
-        for(int i = head[u]; i != -1; i = edge[i].next)
-        {
-            int v = edge[i].to;
-            if(edge[i].cap != 0 || dep[v] != -1)
-                continue;
-            q.push(v);
-            gap[dep[v] = dep[u] + 1] ++;
-        }
+//        printf("%d", p);
+        for(p = 0, i = n - j; i < n; i ++) y[p ++] = i;
+        for(i = 0; i < n; i ++) if(sa[i] >= j ) y[p ++] = sa[i] - j;
+        for(i = 0; i < n; i ++) wv[i] = x[y[i]];
+        for(i = 0; i < m; i ++) wsf[i] = 0;
+        for(i = 0; i < n; i ++) wsf[wv[i]] ++;
+        for(i = 1; i < m; i ++) wsf[i] += wsf[i - 1];
+        for(i = n - 1; i >= 0; i --) sa[--wsf[wv[i]]] = y[i];
+        t = x;
+        x = y;
+        y = t;
+        x[sa[0]] = 0;
+        for(p = 1, i = 1; i < n; i++)
+            x[sa[i]] = cmp(y, sa[i - 1], sa[i], j)? p - 1: p ++;
     }
 }
 
-int sap(int s, int t)
+void getheight(int *r, int n)
 {
-    get_dep(t);
-//    printf("1234");
-    int ans = 0, u = s, top = 0, flow, neck;
-    memcpy(cur, head, sizeof(head));
-    while(dep[s] < e)
+    int i, j, k =0;
+    for(i = 1; i <= n; i ++)
+        rank[sa[i]] = i;
+    for(i = 0; i < n; i ++)
     {
-        if(u == t)
-        {
-            int flow = inf;
-            for(int i = 0; i < top; i ++)
-                if(flow > edge[stack_array[i]].cap)
-                {
-                    flow = edge[stack_array[i]].cap;
-                    neck = i;
-                }
-            for(int i = 0; i < top; i ++)
-            {
-                edge[stack_array[i]].cap -= flow;
-                edge[stack_array[i]^1].cap += flow;
-            }
-            ans += flow;
-            top = neck;
-            u = edge[stack_array[top]].from;
-        }
-
-//        if(u != t && gap[dep[u] - 1] == 0)
-//            break;
-
-        int i;
-        for(i = cur[u]; i != -1; i = edge[i].next)
-            if(edge[i].cap != 0 && dep[u] == dep[edge[i].to] + 1)
-                break;
-        if(i != -1)
-        {
-            cur[u] = i;
-            stack_array[top ++] = i;
-            u = edge[i].to;
-        }
-        else
-        {
-            int dmin = e;
-            for(int i = head[u]; i != -1; i = edge[i].next)
-            {
-                if(edge[i].cap == 0)
-                    continue;
-                if(dmin > dep[edge[i].to])
-                {
-                    dmin = dep[edge[i].to];
-                    cur[u] = i;
-                }
-            }
-            if(--gap[dep[u]] == 0)
-                break;
-            gap[dep[u] = dmin + 1] ++;
-            if(u != s)
-                u = edge[stack_array[--top]].from;
-        }
+        if(k)
+            k --;
+        j = sa[rank[i] - 1];
+        while(r[i + k] == r[j + k])
+            k ++;
+        height[rank[i]] = k;
     }
-    return ans;
 }
 
 int main ()
 {
-    int T, n, m;
-    scanf("%d", &T);
-    while(T --)
+    while(~scanf("%s", str))
     {
-        scanf("%d %d", &n, &m);
-        int x, y, sx = inf, tx = -inf, s, t, u, v, c;
-        for(int i = 1; i <= n; i ++)
+        scanf("%s", str1);
+        int n = 0, len = strlen(str);
+        for(int i = 0; i < len; i ++)
         {
-            scanf("%d %d", &x, &y);
-            if(sx > x)
-            {
-                sx = x;
-                s = i;
-            }
-            if(tx < x)
-            {
-                tx = x;
-                t = i;
-            }
+            s[n ++] = str[i] - 'a' + 1;
         }
-        sap_init();
-        for(int i = 1; i <= m; i ++)
-        {
-            scanf("%d %d %d", &u, &v, &c);
-            addEdge(u, v, c);
-            addEdge(v, u, c);
-        }
-        printf("%d\n", sap(s, t));
+        s[n ++] = 28;
+        len = strlen(str1);
+        for(int i = 0; i < len; i ++)
+            s[n ++] = str1[i] - 'a' + 1;
+        s[n] = 0;
+        getsa(s, sa, n + 1, 30);
+        getheight(s, n);
+
+        int maxx = 0, pos = 0;
+        len = strlen(str);
+        for(int i = 2; i < n; i ++)
+            if(height[i] > maxx)
+            {
+                if(0 <= sa[i - 1] && sa[i - 1] < len && len < sa[i])
+                    maxx = height[i];
+                if(0 <= sa[i] && sa[i] < len && len < sa[i - 1])
+                    maxx = height[i];
+            }
+        printf("%d\n", maxx);
     }
-    return 0;
 }
