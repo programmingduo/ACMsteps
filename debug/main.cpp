@@ -1,65 +1,57 @@
 #include<cstdio>
-#include<map>
-using namespace std;
+#include<string.h>
 
-map<long long, int> m;
-long long w[1006], v[1005], u[1005];
+int a[256000];
+int min(int x, int y)
+{
+    return x<y? x: y;
+}
+char s[256005], str[3];
 
 int main ()
 {
-    int n, op, t = 0;
-    long long a, b;
+    int n;
+    scanf("%s", s);
     scanf("%d", &n);
+    memset(a, 0, sizeof(a));
     for(int i = 0; i < n; i ++)
     {
-        scanf("%d", &op);
-        if(op == 1)
+        scanf("%s", str);
+        int t = str[0] * 200 + str[1];
+        a[t] = 1;
+        t = str[1] * 200 + str[0] ;
+        a[t] = 1;
+    }
+    int len = strlen(s) - 1, ans  =0;
+    for(int i = 0; i < len; i ++)
+    {
+        int temp = (s[i]) * 200 + s[i + 1];
+        if(a[temp])
         {
-            scanf("%lld %lld %lld", &v[t], &u[t], &w[t]);
-            t ++;
-        }
-        else
-        {
-            scanf("%lld %lld", &a, &b);
-            m.clear();
-            while(a != b)
+            int k;
+            int t1 = 1, t2 = 1;
+            for(k = i + 2; k <= len; k ++)
             {
-                if(a > b)
-                {
-                    m[a] = 1;
-                    a /= 2;
-                }
+                if(s[k] == s[i])
+                    t1 ++;
+                else if(s[k] == s[i + 1])
+                    t2 ++;
                 else
-                {
-                    m[b] = 1;
-                    b /= 2;
-                }
+                    break;
             }
-
-            long long ans = 0;
-            for(int j = 0; j < t; j ++)
+            for(int kk = i - 1; kk >= 0; kk --)
             {
-                a = v[j];
-                b = u[j];
-                while(a != b)
-                {
-                    if(a > b)
-                    {
-                        if(m.find(a) != m.end())
-                            ans += w[j];
-                        a /= 2;
-                    }
-                    else
-                    {
-                        if(m.find(b) != m.end())
-                            ans += w[j];
-                        b /= 2;
-                    }
-                }
+                if(s[kk] == s[i])
+                    t1 ++;
+                else if(s[kk] == s[i + 1])
+                    t2 ++;
+                else
+                    break;
             }
-            printf("%lld\n", ans);
+            ans += min(t1, t2);
+            i = k - 1;
         }
     }
-    return 0;
+    printf("%d\n", ans);
+    return main();
 }
-
