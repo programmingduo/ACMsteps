@@ -22,7 +22,8 @@ void Push(int id) {
     tr[id].sum = lsum+rsum+1;
 }
 
-void lazy(int id) {//懒操作
+
+void lazy(int id) {//flip专属懒操作
     if (tr[id].lz) {
         swap(lc, rc);
         tr[lc].lz ^= 1, tr[rc].lz ^= 1;
