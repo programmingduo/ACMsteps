@@ -29,7 +29,8 @@ void Prime(int n)       //n表示最大界,但是不包括n
 
 int main ()
 {
-    Prime(100);
+    Prime(200005);
+    printf("%d\n", num);
     for(int i =0; i < num; i ++)
     {
         printf("%d ", prime[i]);
