@@ -18,7 +18,8 @@
 1470325315 source:g:\acmsteps\debug\main.cpp
 	<cstdio>
 
-1471760046 source:/home/wuduo/Documents/ACMsteps/debug/main.cpp
+1472265546 source:/home/wuduo/Documents/ACMsteps/debug/main.cpp
 	<cstdio>
-	<string.h>
+	<queue>
+	<algorithm>
 
