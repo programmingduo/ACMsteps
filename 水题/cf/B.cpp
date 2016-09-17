@@ -20,6 +20,7 @@ int main ()
         }
     }
 
+    sum = 0;
     if(n == 1)
     {
         printf("1\n");
@@ -77,15 +78,16 @@ int main ()
             temp += c[i][i];
         if(temp != sum)
             flag = 0;
+
         temp = 0;
         for(int i = 1; i <= n && flag; i ++)
             temp += c[i][n + 1 - i];
         if(temp != sum)
             flag = 0;
 
-        if(flag)
+        if(flag && c[x][y] > 0)
         {
-            printf("%d\n", c[x][y]);
+            printf("%I64d\n", c[x][y]);
         }
         else
             printf("-1\n");
