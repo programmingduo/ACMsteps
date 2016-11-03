@@ -2,8 +2,7 @@
 
 const int maxn = 304;
 int N, ans;
-int flag[maxn];
-
+int flag[304];
 struct node
 {
     int val, key;
@@ -11,7 +10,7 @@ struct node
 
 int GCD(int x, int y)
 {
-    if(y == 0)
+    if( y == 0)
         return x;
     return GCD(y, x % y);
 }
@@ -33,16 +32,16 @@ void dfs(int id, int tans)
     {
         dfs(id + 1, tans);
     }
-    else if(id + 1 < N - 1 && flag[id + 1] == 0)
+    else if(id + 1 < N - 1 && flag[id] == 1 && flag[id + 1] == 0)
     {
-        dfs(id + 2, tans + a[id].val + a[id + 1].val);
+        dfs(id + 1, tans + a[id].val + a[id + 1].val);
     }
-    else if(id + 1 < N - 1 && flag[id + 1] == 1)
+    else if(id + 3 < N - 1)
     {
         dfs(id + 2, tans + a[id].val + a[id + 1].val);
         dfs(id + 3, tans + a[id + 1].val + a[id + 2].val);
     }
-    else
+    else if(id + 2 < N - 1)
     {
         dfs(id + 2, tans + a[id].val + a[id + 1].val);
     }

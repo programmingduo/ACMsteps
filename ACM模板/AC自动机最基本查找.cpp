@@ -1,6 +1,6 @@
-#include<cstdio>
-#include<string.h>
-#include<queue>
+#include <cstdio>
+#include <string.h>
+#include <queue>
 using namespace std;
 
 int ch[500005][26], fail[500005], val[500005], total[500005];

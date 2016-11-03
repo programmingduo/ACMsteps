@@ -1,6 +1,6 @@
-#include<cstdio>
-#include<string.h>
-#include<queue>
+#include <cstdio>
+#include <string.h>
+#include <queue>
 
 using namespace std;
 
