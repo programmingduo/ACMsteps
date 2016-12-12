@@ -1,6 +1,7 @@
 #include<cstdio>
 
 int find_mid(int arr[], int left, int right, int x)
+//下标从零开始
 {
     if(left >= right){
         return arr[left + x];

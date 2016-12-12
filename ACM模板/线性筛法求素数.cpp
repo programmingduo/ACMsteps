@@ -1,5 +1,5 @@
-#include<cstdio>
-#include<string.h>
+#include <cstdio>
+#include <string.h>
 
 const int N = 25600000;
 bool a[N];
