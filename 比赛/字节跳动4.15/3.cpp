@@ -34,28 +34,28 @@ int main ()
         memset(firstr, 0, sizeof(firstr));
         for(int i = 0; i < len; i ++)
         {
-            if(s[i] == 'u' || s[i] == 'U')
+            if(s[i] == 'u')
             {
                 u ++;
                 d --;
                 if(u > 0 && !firstu[u])
                     firstu[u] = i + 1;
             }
-            if(s[i] == 'd' ||s[i] == 'D')
+            if(s[i] == 'd')
             {
                 d ++;
                 u --;
                 if(d > 0 && !firstd[d])
                     firstd[d] = i + 1;
             }
-            if(s[i] == 'l' || s[i] == 'L')
+            if(s[i] == 'l')
             {
                 l ++;
                 r --;
                 if(l > 0 && !firstl[l])
                     firstl[l] = i + 1;
             }
-            if(s[i] == 'r' || s[i] == 'R')
+            if(s[i] == 'r')
             {
                 r ++;
                 l --;
